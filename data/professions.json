@@ -1,0 +1,531 @@
+[
+  {
+    "slug": "desarrollador-web-fullstack",
+    "title": "Desarrollador Web Full Stack",
+    "category": "desarrollo-web",
+    "base_usd_hour_junior": 15,
+    "base_usd_hour_mid": 30,
+    "base_usd_hour_senior": 55,
+    "skills": [
+      "React",
+      "Node.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Next.js",
+      "Docker"
+    ],
+    "common_deliverables": [
+      "Desarrollo de plataforma web completa",
+      "API REST / GraphQL",
+      "Mantenimiento mensual de servidores",
+      "Integración de pasarelas de pago"
+    ]
+  },
+  {
+    "slug": "disenador-ui-ux",
+    "title": "Diseñador UI/UX & Producto Digital",
+    "category": "diseno-multimedia",
+    "base_usd_hour_junior": 12,
+    "base_usd_hour_mid": 25,
+    "base_usd_hour_senior": 48,
+    "skills": [
+      "Figma",
+      "Design Systems",
+      "Prototipado",
+      "User Research",
+      "Wireframing"
+    ],
+    "common_deliverables": [
+      "Diseño completo de app móvil",
+      "Rediseño de landing page de alta conversión",
+      "Sistema de diseño corporativo",
+      "Auditoría de usabilidad y UX"
+    ]
+  },
+  {
+    "slug": "editor-video-youtube-tiktok",
+    "title": "Editor de Video para Creadores & Marcas",
+    "category": "video-animacion",
+    "base_usd_hour_junior": 10,
+    "base_usd_hour_mid": 22,
+    "base_usd_hour_senior": 40,
+    "skills": [
+      "Premiere Pro",
+      "After Effects",
+      "DaVinci Resolve",
+      "CapCut Pro",
+      "Sound Design"
+    ],
+    "common_deliverables": [
+      "Pack mensual de 12 Reels / TikToks",
+      "Video largo para YouTube con ritmo dinámico",
+      "Video corporativo promocional",
+      "Subtitulado y efectos de motion graphics"
+    ]
+  },
+  {
+    "slug": "copywriter-redactor-seo",
+    "title": "Copywriter & Redactor de Contenido SEO",
+    "category": "redaccion-copywriting",
+    "base_usd_hour_junior": 10,
+    "base_usd_hour_mid": 20,
+    "base_usd_hour_senior": 38,
+    "skills": [
+      "Copywriting de Respuesta Directa",
+      "SEO On-Page",
+      "Email Marketing",
+      "Storytelling",
+      "Investigación de Palabras Clave"
+    ],
+    "common_deliverables": [
+      "Página de ventas (Sales Page)",
+      "Secuencia de 5 emails de venta",
+      "Pack de 4 artículos de blog posicionados en Google",
+      "Guiones para videos promocionales"
+    ]
+  },
+  {
+    "slug": "community-manager-media-buyer",
+    "title": "Media Buyer & Trafficker Digital (Meta/Google Ads)",
+    "category": "marketing-digital",
+    "base_usd_hour_junior": 12,
+    "base_usd_hour_mid": 25,
+    "base_usd_hour_senior": 50,
+    "skills": [
+      "Meta Ads Manager",
+      "Google Ads",
+      "TikTok Ads",
+      "Google Analytics 4",
+      "Embudos de Venta"
+    ],
+    "common_deliverables": [
+      "Configuración y optimización de campaña publicitaria",
+      "Retainer mensual de gestión de pauta",
+      "Instalación de píxeles y API de conversiones",
+      "Reporte mensual de métricas y ROAS"
+    ]
+  },
+  {
+    "slug": "especialista-ia-automatizaciones",
+    "title": "Especialista en Automatizaciones e IA",
+    "category": "ia-automatizacion",
+    "base_usd_hour_junior": 18,
+    "base_usd_hour_mid": 35,
+    "base_usd_hour_senior": 65,
+    "skills": [
+      "Make.com",
+      "Zapier",
+      "OpenAI API",
+      "LangChain",
+      "Airtable",
+      "Webhooks"
+    ],
+    "common_deliverables": [
+      "Agente de atención al cliente con IA",
+      "Automatización de leads desde CRM a WhatsApp",
+      "Flujo de creación y publicación automática de contenido",
+      "Sincronización de bases de datos de inventario"
+    ]
+  },
+  {
+    "slug": "desarrollador-mobile-flutter-react-native",
+    "title": "Desarrollador de Aplicaciones Móviles",
+    "category": "desarrollo-web",
+    "base_usd_hour_junior": 16,
+    "base_usd_hour_mid": 32,
+    "base_usd_hour_senior": 58,
+    "skills": [
+      "Flutter",
+      "React Native",
+      "Swift",
+      "Kotlin",
+      "Firebase",
+      "App Store / Play Store Deploy"
+    ],
+    "common_deliverables": [
+      "Desarrollo de App MVP para iOS y Android",
+      "Publicación en Google Play y Apple Store",
+      "Integración de notificaciones Push y Analytics",
+      "Mantenimiento y actualización de dependencias"
+    ]
+  },
+  {
+    "slug": "consultor-seo-estrategia-organica",
+    "title": "Consultor SEO & Posicionamiento en Buscadores",
+    "category": "marketing-digital",
+    "base_usd_hour_junior": 14,
+    "base_usd_hour_mid": 28,
+    "base_usd_hour_senior": 55,
+    "skills": [
+      "SEO Técnico",
+      "Auditorías con Screaming Frog",
+      "Link Building",
+      "Search Console",
+      "E-EAT"
+    ],
+    "common_deliverables": [
+      "Auditoría técnica exhaustiva de sitio web",
+      "Estrategia de arquitectura web y clusters de contenido",
+      "Optimización de velocidad y Core Web Vitals",
+      "Servicio mensual de posicionamiento orgánico"
+    ]
+  },
+  {
+    "slug": "animador-motion-graphics-3d",
+    "title": "Animador 2D / 3D & Motion Designer",
+    "category": "video-animacion",
+    "base_usd_hour_junior": 14,
+    "base_usd_hour_mid": 28,
+    "base_usd_hour_senior": 52,
+    "skills": [
+      "After Effects",
+      "Blender",
+      "Cinema 4D",
+      "Octane Render",
+      "Illustrator"
+    ],
+    "common_deliverables": [
+      "Animación de logo corporativo (Logo Reveal)",
+      "Video explicativo animado de producto (Explainer Video)",
+      "Assets en 3D para páginas web",
+      "Cortinillas y transiciones para streaming / broadcast"
+    ]
+  },
+  {
+    "slug": "traductor-localizador-tecnico",
+    "title": "Traductor & Especialista en Localización",
+    "category": "redaccion-copywriting",
+    "base_usd_hour_junior": 10,
+    "base_usd_hour_mid": 18,
+    "base_usd_hour_senior": 35,
+    "skills": [
+      "Traducción Inglés-Español",
+      "Localización de Software",
+      "Herramientas CAT (Trados)",
+      "Revisión de Estilo"
+    ],
+    "common_deliverables": [
+      "Traducción de software o interfaz de aplicación",
+      "Traducción jurada o técnica de documentos",
+      "Localización cultural de campañas publicitarias",
+      "Subtitulado sincronizado de conferencias"
+    ]
+  },
+  {
+    "slug": "desarrollador-backend-python-django",
+    "title": "Desarrollador Backend Python & Django",
+    "category": "desarrollo-web",
+    "base_usd_hour_junior": 16,
+    "base_usd_hour_mid": 32,
+    "base_usd_hour_senior": 60,
+    "skills": [
+      "Python",
+      "Django",
+      "FastAPI",
+      "PostgreSQL",
+      "Redis",
+      "AWS"
+    ],
+    "common_deliverables": [
+      "API REST escalable",
+      "Arquitectura de microservicios",
+      "Optimización de base de datos",
+      "Integración con servicios cloud"
+    ]
+  },
+  {
+    "slug": "especialista-shopify-ecommerce",
+    "title": "Especialista en Tiendas Shopify & E-commerce",
+    "category": "desarrollo-web",
+    "base_usd_hour_junior": 14,
+    "base_usd_hour_mid": 28,
+    "base_usd_hour_senior": 50,
+    "skills": [
+      "Liquid",
+      "Shopify Plus",
+      "Klaviyo",
+      "CRO",
+      "Google Analytics 4"
+    ],
+    "common_deliverables": [
+      "Creación de tienda Shopify desde cero",
+      "Optimización de tasa de conversión (CRO)",
+      "Integración de apps y pasarelas de pago",
+      "Mantenimiento y catálogo"
+    ]
+  },
+  {
+    "slug": "consultor-powerbi-data-analytics",
+    "title": "Consultor de Power BI & Data Analytics",
+    "category": "consultoria-negocios",
+    "base_usd_hour_junior": 18,
+    "base_usd_hour_mid": 35,
+    "base_usd_hour_senior": 65,
+    "skills": [
+      "Power BI",
+      "DAX",
+      "SQL",
+      "Python Data",
+      "Excel Avanzado",
+      "ETL"
+    ],
+    "common_deliverables": [
+      "Dashboard ejecutivo automatizado",
+      "Modelado de datos financiero y comercial",
+      "Migración de reportes manuales a la nube",
+      "Capacitación a equipos"
+    ]
+  },
+  {
+    "slug": "ilustrador-concept-artist-digital",
+    "title": "Ilustrador Digital & Concept Artist",
+    "category": "diseno-multimedia",
+    "base_usd_hour_junior": 12,
+    "base_usd_hour_mid": 24,
+    "base_usd_hour_senior": 45,
+    "skills": [
+      "Photoshop",
+      "Procreate",
+      "Concept Art",
+      "Ilustración Vectorial",
+      "Diseño de Personajes"
+    ],
+    "common_deliverables": [
+      "Pack de ilustraciones para producto o web",
+      "Diseño de personajes (Character Design)",
+      "Portadas de libros / álbumes",
+      "Assets visuales corporativos"
+    ]
+  },
+  {
+    "slug": "disenador-3d-blender-unreal",
+    "title": "Diseñador 3D para Videojuegos & Renders",
+    "category": "diseno-multimedia",
+    "base_usd_hour_junior": 15,
+    "base_usd_hour_mid": 30,
+    "base_usd_hour_senior": 55,
+    "skills": [
+      "Blender",
+      "Unreal Engine 5",
+      "Substance Painter",
+      "ZBrush",
+      "Renders 3D"
+    ],
+    "common_deliverables": [
+      "Modelado 3D de producto para publicidad",
+      "Entornos y escenarios para videojuegos",
+      "Renders arquitectónicos hiperrealistas",
+      "Animaciones 3D de producto"
+    ]
+  },
+  {
+    "slug": "editor-podcast-sound-designer",
+    "title": "Editor de Podcast & Diseñador de Sonido",
+    "category": "video-animacion",
+    "base_usd_hour_junior": 10,
+    "base_usd_hour_mid": 20,
+    "base_usd_hour_senior": 38,
+    "skills": [
+      "Audition",
+      "Reaper",
+      "Pro Tools",
+      "Masterización",
+      "Limpieza de Ruido Izotope"
+    ],
+    "common_deliverables": [
+      "Edición y mezcla de episodio de podcast",
+      "Diseño de intro y cortinillas sonoras",
+      "Limpieza y masterización de audio",
+      "Extracción de micro-clips para redes"
+    ]
+  },
+  {
+    "slug": "especialista-growth-hacking-funnels",
+    "title": "Especialista en Growth Hacking & Embudos",
+    "category": "marketing-digital",
+    "base_usd_hour_junior": 16,
+    "base_usd_hour_mid": 32,
+    "base_usd_hour_senior": 60,
+    "skills": [
+      "Embudos de Venta",
+      "A/B Testing",
+      "Email Automation",
+      "Meta Ads",
+      "Analytics"
+    ],
+    "common_deliverables": [
+      "Auditoría de embudo y puntos de fuga",
+      "Configuración de secuencias automatizadas",
+      "Lanzamiento de campañas de captación",
+      "Estrategia de retención y LTV"
+    ]
+  },
+  {
+    "slug": "especialista-ciberseguridad-pentesting",
+    "title": "Consultor de Ciberseguridad & Pentesting",
+    "category": "consultoria-negocios",
+    "base_usd_hour_junior": 22,
+    "base_usd_hour_mid": 45,
+    "base_usd_hour_senior": 85,
+    "skills": [
+      "Pentesting Web",
+      "OWASP Top 10",
+      "Auditoría de Vulnerabilidades",
+      "Seguridad Cloud",
+      "Linux Hardening"
+    ],
+    "common_deliverables": [
+      "Auditoría de seguridad web completa",
+      "Test de penetración y reporte ejecutivo",
+      "Plan de remediación de vulnerabilidades",
+      "Asesoría en cumplimiento normativo"
+    ]
+  },
+  {
+    "slug": "community-manager-tiktok-instagram",
+    "title": "Community Manager & Creador de Contenido",
+    "category": "marketing-digital",
+    "base_usd_hour_junior": 10,
+    "base_usd_hour_mid": 18,
+    "base_usd_hour_senior": 35,
+    "skills": [
+      "Gestión de Redes",
+      "CapCut",
+      "Canva Pro",
+      "Copywriting Viral",
+      "Estrategia de Contenidos"
+    ],
+    "common_deliverables": [
+      "Gestión mensual de Instagram y TikTok",
+      "Calendario de 20 publicaciones y reels",
+      "Interacción y atención a mensajes directos",
+      "Reporte mensual de crecimiento y engagement"
+    ]
+  },
+  {
+    "slug": "copywriter-email-marketing-klaviyo",
+    "title": "Copywriter Especialista en Email Marketing",
+    "category": "redaccion-copywriting",
+    "base_usd_hour_junior": 12,
+    "base_usd_hour_mid": 25,
+    "base_usd_hour_senior": 48,
+    "skills": [
+      "Klaviyo",
+      "Mailchimp",
+      "Storytelling",
+      "Copywriting de Conversión",
+      "Segmentación"
+    ],
+    "common_deliverables": [
+      "Flujo automatizado de bienvenida (Welcome Series)",
+      "Flujo de recuperación de carrito abandonado",
+      "Newsletter semanal para comunidad",
+      "Campaña promocional de lanzamiento"
+    ]
+  },
+  {
+    "slug": "consultor-notion-sistemas-productividad",
+    "title": "Consultor de Notion & Sistemas de Trabajo",
+    "category": "ia-automatizacion",
+    "base_usd_hour_junior": 14,
+    "base_usd_hour_mid": 26,
+    "base_usd_hour_senior": 50,
+    "skills": [
+      "Notion Avanzado",
+      "Fórmulas 2.0",
+      "Make.com",
+      "Sistemas OKR",
+      "Flujos Operativos"
+    ],
+    "common_deliverables": [
+      "Workspace empresarial en Notion a medida",
+      "Sistema de gestión de proyectos y tareas",
+      "CRM y seguimiento de clientes en Notion",
+      "Capacitación al equipo de trabajo"
+    ]
+  },
+  {
+    "slug": "especialista-bubble-desarrollo-nocode",
+    "title": "Desarrollador No-Code en Bubble.io",
+    "category": "ia-automatizacion",
+    "base_usd_hour_junior": 15,
+    "base_usd_hour_mid": 30,
+    "base_usd_hour_senior": 55,
+    "skills": [
+      "Bubble.io",
+      "APIs & Webhooks",
+      "Bases de Datos Relacionales",
+      "Stripe",
+      "Responsive Engine"
+    ],
+    "common_deliverables": [
+      "Desarrollo de aplicación web MVP en Bubble",
+      "Integración de pasarela de pago y suscripciones",
+      "Diseño responsivo optimizado para móviles",
+      "Mantenimiento y corrección de flujos"
+    ]
+  },
+  {
+    "slug": "desarrollador-smart-contracts-web3",
+    "title": "Desarrollador Web3 & Smart Contracts",
+    "category": "desarrollo-web",
+    "base_usd_hour_junior": 25,
+    "base_usd_hour_mid": 50,
+    "base_usd_hour_senior": 90,
+    "skills": [
+      "Solidity",
+      "Ethereum",
+      "Ethers.js",
+      "Hardhat",
+      "Auditoría de Smart Contracts"
+    ],
+    "common_deliverables": [
+      "Desarrollo y testeo de Smart Contract ERC-20 / ERC-721",
+      "Integración de wallet Web3 en frontend",
+      "Auditoría de seguridad básica de contrato",
+      "Deploy en red principal (Mainnet)"
+    ]
+  },
+  {
+    "slug": "locutor-voice-over-comercial",
+    "title": "Locutor Profesional & Voice Over",
+    "category": "video-animacion",
+    "base_usd_hour_junior": 12,
+    "base_usd_hour_mid": 24,
+    "base_usd_hour_senior": 45,
+    "skills": [
+      "Locución Neutra",
+      "Doblaje",
+      "Cabina Insonorizada",
+      "Micrófono XLR",
+      "Edición de Voz"
+    ],
+    "common_deliverables": [
+      "Voz en off para spot publicitario (30s)",
+      "Grabación de audiolibro o curso online",
+      "Voz para video corporativo o institucional",
+      "Locución para conmutador telefónico / IVR"
+    ]
+  },
+  {
+    "slug": "consultor-finanzas-contabilidad-freelance",
+    "title": "Asesor Financiero para Emprendedores Digitales",
+    "category": "consultoria-negocios",
+    "base_usd_hour_junior": 16,
+    "base_usd_hour_mid": 32,
+    "base_usd_hour_senior": 60,
+    "skills": [
+      "Planificación Fiscal",
+      "Presupuestos",
+      "Flujo de Caja",
+      "Facturación Internacional",
+      "Inversiones"
+    ],
+    "common_deliverables": [
+      "Auditoría y orden de finanzas del negocio",
+      "Estructuración de precios y márgenes de ganancia",
+      "Planificación de retiro y fondos de emergencia",
+      "Optimización de impuestos para nómadas digitales"
+    ]
+  }
+]

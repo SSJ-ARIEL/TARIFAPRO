@@ -1,0 +1,36 @@
+{
+  "name": "Tarifa Pro",
+  "tagline": "Guías de cotización, tarifas por hora y calculadoras para freelancers en español.",
+  "description": "Tarifa Pro es la plataforma líder de referencia para cotizar proyectos digitales, calcular tarifas por hora, presupuestar servicios y consultar salarios freelance por profesión y país.",
+  "language": "es",
+  "repo_name": "TARIFAPRO",
+  "github_owner": "SSJ-ARIEL",
+  "site_url": "https://ssj-ariel.github.io/TARIFAPRO",
+  "base_path": "/TARIFAPRO",
+  "author": "Equipo Editorial Tarifa Pro",
+  "publisher": {
+    "name": "Tarifa Pro",
+    "logo": "assets/icons/favicon.svg"
+  },
+  "social": {
+    "twitter_handle": "@tarifapro",
+    "theme_color": "#030712"
+  },
+  "verification": {
+    "google_site_verification": "fiIBsjUQK2ml2hf1bKK4YpKukaQ7cPRnddfQ1tTW11g"
+  },
+  "analytics": {
+    "ga4_measurement_id": "G-RM2QTBG2B4"
+  },
+  "adsense": {
+    "client_id": "ca-pub-7507181626477156",
+    "publisher_id_for_ads_txt": "pub-7507181626477156"
+  },
+  "colors": {
+    "background": "#030712",
+    "surface": "#0b1120",
+    "emerald": "#10b981",
+    "cyan": "#00d2ff",
+    "indigo": "#6366f1"
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "slug": "desarrollo-web",
+    "name": "Desarrollo & Programación",
+    "nav_label": "Desarrollo",
+    "icon": "💻",
+    "description": "Tarifas por hora, precios de aplicaciones, sitios web, APIs y proyectos de software a medida."
+  },
+  {
+    "slug": "diseno-multimedia",
+    "name": "Diseño UI/UX & Gráfico",
+    "nav_label": "Diseño",
+    "icon": "🎨",
+    "description": "Cotización de marcas, interfaces web, prototipos en Figma, ilustración digital y branding."
+  },
+  {
+    "slug": "marketing-digital",
+    "name": "Marketing & Publicidad Digital",
+    "nav_label": "Marketing",
+    "icon": "📈",
+    "description": "Precios de gestión de campañas de Meta/Google Ads, SEO, Community Management y lanzamientos."
+  },
+  {
+    "slug": "video-animacion",
+    "name": "Video & Motion Graphics",
+    "nav_label": "Video & Edición",
+    "icon": "🎬",
+    "description": "Costes de edición para YouTube/TikTok, efectos visuales, animación 3D y postproducción de audio."
+  },
+  {
+    "slug": "redaccion-copywriting",
+    "name": "Redacción & Copywriting",
+    "nav_label": "Redacción",
+    "icon": "✍️",
+    "description": "Tarifas por palabra, artículos para blog, páginas de venta, emails comerciales y traducción técnica."
+  },
+  {
+    "slug": "ia-automatizacion",
+    "name": "Inteligencia Artificial & No-Code",
+    "nav_label": "IA & No-Code",
+    "icon": "🤖",
+    "description": "Cotización de chatbots con IA, automatizaciones en Make/Zapier y desarrollo con Bubble/Webflow."
+  },
+  {
+    "slug": "consultoria-negocios",
+    "name": "Consultoría & Estrategia",
+    "nav_label": "Consultoría",
+    "icon": "💼",
+    "description": "Tarifas de asesoría empresarial, finanzas, analítica de datos y gestión de proyectos."
+  }
+]

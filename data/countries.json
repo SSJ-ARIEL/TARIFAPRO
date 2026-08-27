@@ -1,0 +1,152 @@
+[
+  {
+    "code": "MX",
+    "slug": "mexico",
+    "name": "México",
+    "currency": "MXN",
+    "symbol": "$",
+    "usd_rate": 18.5,
+    "flag": "🇲🇽",
+    "tax_info": "Régimen RESICO o Actividad Empresarial (ISR 1%-2.5% o hasta 35%, IVA 16%)"
+  },
+  {
+    "code": "ES",
+    "slug": "espana",
+    "name": "España",
+    "currency": "EUR",
+    "symbol": "€",
+    "usd_rate": 0.92,
+    "flag": "🇪🇸",
+    "tax_info": "Cuota de Autónomos RETA + IRPF trimestral (retención 15%) + IVA 21%"
+  },
+  {
+    "code": "CO",
+    "slug": "colombia",
+    "name": "Colombia",
+    "currency": "COP",
+    "symbol": "$",
+    "usd_rate": 4100.0,
+    "flag": "🇨🇴",
+    "tax_info": "Régimen Simple de Tributación (RST) o Ordinario + Seguridad Social (salud y pensión)"
+  },
+  {
+    "code": "AR",
+    "slug": "argentina",
+    "name": "Argentina",
+    "currency": "ARS",
+    "symbol": "$",
+    "usd_rate": 1150.0,
+    "flag": "🇦🇷",
+    "tax_info": "Régimen de Monotributo (categorías A a K) o Responsable Inscripto + Facturación E para exportación"
+  },
+  {
+    "code": "CL",
+    "slug": "chile",
+    "name": "Chile",
+    "currency": "CLP",
+    "symbol": "$",
+    "usd_rate": 940.0,
+    "flag": "🇨🇱",
+    "tax_info": "Boletas de Honorarios con retención del 13.75% + Pago provisional mensual (PPM)"
+  },
+  {
+    "code": "PE",
+    "slug": "peru",
+    "name": "Perú",
+    "currency": "PEN",
+    "symbol": "S/",
+    "usd_rate": 3.75,
+    "flag": "🇵🇪",
+    "tax_info": "Régimen RUC con Recibos por Honorarios (4ta categoría con 8% de retención)"
+  },
+  {
+    "code": "US",
+    "slug": "estados-unidos",
+    "name": "Estados Unidos / Remoto Global",
+    "currency": "USD",
+    "symbol": "$",
+    "usd_rate": 1.0,
+    "flag": "🇺🇸",
+    "tax_info": "Contratistas independientes W-8BEN (extranjeros) o 1099-NEC con cobro en dólares vía Wise/Stripe"
+  },
+  {
+    "code": "EC",
+    "slug": "ecuador",
+    "name": "Ecuador",
+    "currency": "USD",
+    "symbol": "$",
+    "usd_rate": 1.0,
+    "flag": "🇪🇨",
+    "tax_info": "Régimen RIMPE (Negocios Populares o Emprendedores) con economía dolarizada"
+  },
+  {
+    "code": "CR",
+    "slug": "costa-rica",
+    "name": "Costa Rica",
+    "currency": "CRC",
+    "symbol": "₡",
+    "usd_rate": 520.0,
+    "flag": "🇨🇷",
+    "tax_info": "Impuesto sobre la Renta para profesionales independientes + IVA 13%"
+  },
+  {
+    "code": "UY",
+    "slug": "uruguay",
+    "name": "Uruguay",
+    "currency": "UYU",
+    "symbol": "$",
+    "usd_rate": 40.0,
+    "flag": "🇺🇾",
+    "tax_info": "Régimen de Unipersonales con exoneraciones fiscales para exportación de software y servicios IT"
+  },
+  {
+    "code": "PA",
+    "slug": "panama",
+    "name": "Panamá",
+    "currency": "USD",
+    "symbol": "$",
+    "usd_rate": 1.0,
+    "flag": "🇵🇦",
+    "tax_info": "Economía dolarizada, régimen fiscal territorial con exoneración para ingresos del exterior"
+  },
+  {
+    "code": "DO",
+    "slug": "republica-dominicana",
+    "name": "República Dominicana",
+    "currency": "DOP",
+    "symbol": "RD$",
+    "usd_rate": 59.0,
+    "flag": "🇩🇴",
+    "tax_info": "Régimen Simplificado de Tributación (RST) de la DGII + Retención de ITBIS"
+  },
+  {
+    "code": "GT",
+    "slug": "guatemala",
+    "name": "Guatemala",
+    "currency": "GTQ",
+    "symbol": "Q",
+    "usd_rate": 7.8,
+    "flag": "🇬🇹",
+    "tax_info": "Régimen de Pequeño Contribuyente (5% sobre ingresos brutos) ante la SAT"
+  },
+  {
+    "code": "BO",
+    "slug": "bolivia",
+    "name": "Bolivia",
+    "currency": "BOB",
+    "symbol": "Bs",
+    "usd_rate": 6.9,
+    "flag": "🇧🇴",
+    "tax_info": "Régimen Tributario General (RC-IVA, IT e IUE) con cobros en moneda local o divisas"
+  },
+  {
+    "code": "PY",
+    "slug": "paraguay",
+    "name": "Paraguay",
+    "currency": "PYG",
+    "symbol": "₲",
+    "usd_rate": 7500.0,
+    "flag": "🇵🇾",
+    "tax_info": "Impuesto a la Renta Personal (IRP - Servicios Personales) + IVA Servicios 10%"
+  }
+]
