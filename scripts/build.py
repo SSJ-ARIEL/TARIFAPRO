@@ -20,23 +20,25 @@ COUNTRIES = read_json("countries.json")
 PROFESSIONS = read_json("professions.json")
 CATEGORY_BY_SLUG = {c['slug']: c for c in CATEGORIES}
 
-BASE_PATH = SITE["base_path"].rstrip("/")
 SITE_URL = SITE["site_url"].rstrip("/")
-
 ARTICLES = expand_articles(PROFESSIONS, COUNTRIES, CATEGORIES)
 
 def esc(v: object) -> str:
     return html.escape(str(v), quote=True)
 
-def route_url(route: str = "") -> str:
+def prefix(depth: int) -> str:
+    return "../" * depth if depth > 0 else "./"
+
+def route_url(route: str = "", depth: int = 0) -> str:
+    p = prefix(depth)
     route = route.strip("/")
     if route:
-        return f"{BASE_PATH}/{route}/" if BASE_PATH else f"/{route}/"
-    return f"{BASE_PATH}/" if BASE_PATH else "/"
+        return f"{p}{route}/"
+    return p if depth > 0 else "./"
 
-def asset_url(path: str) -> str:
-    clean = path.strip("/")
-    return f"{BASE_PATH}/{clean}" if BASE_PATH else f"/{clean}"
+def asset_url(path: str, depth: int = 0) -> str:
+    p = prefix(depth)
+    return f"{p}{path.strip('/')}"
 
 def ensure_clean_docs():
     if DOCS.exists():
@@ -45,7 +47,7 @@ def ensure_clean_docs():
     shutil.copytree(ASSETS, DOCS / "assets")
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
 
-def head(title: str, description: str, canonical: str, og_type: str = "website") -> str:
+def head(title: str, description: str, canonical: str, depth: int = 0, og_type: str = "website") -> str:
     return f"""
 <head>
   <meta charset="utf-8">
@@ -57,8 +59,8 @@ def head(title: str, description: str, canonical: str, og_type: str = "website")
   <meta name="google-site-verification" content="{esc(SITE['verification']['google_site_verification'])}">
   <meta name="google-adsense-account" content="{esc(SITE['adsense']['client_id'])}">
   <link rel="canonical" href="{esc(canonical)}">
-  <link rel="icon" href="{asset_url('assets/icons/favicon.svg')}" type="image/svg+xml">
-  <link rel="stylesheet" href="{asset_url('assets/css/styles.css')}">
+  <link rel="icon" href="{asset_url('assets/icons/favicon.svg', depth)}" type="image/svg+xml">
+  <link rel="stylesheet" href="{asset_url('assets/css/styles.css', depth)}">
   
   <!-- Cookie Consent Banner (CookieYes CMP / IAB TCF v2.2) -->
   <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/63029c5cae366ef7f38f04401f9d9185/script.js"></script>
@@ -84,35 +86,35 @@ def head(title: str, description: str, canonical: str, og_type: str = "website")
 </head>
 """.strip()
 
-def header(active: str = "") -> str:
+def header(active: str = "", depth: int = 0) -> str:
     nav_links = "\n".join([
-        f'<a href="{route_url(c["slug"])}" class="{"active" if active == c["slug"] else ""}">{esc(c["nav_label"])}</a>'
+        f'<a href="{route_url(c["slug"], depth)}" class="{"active" if active == c["slug"] else ""}">{esc(c["nav_label"])}</a>'
         for c in CATEGORIES[:5]
     ])
     return f"""
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="{route_url()}">
-      <img src="{asset_url('assets/icons/favicon.svg')}" alt="Tarifa Pro" class="brand-logo">
+    <a class="brand" href="{route_url('', depth)}">
+      <img src="{asset_url('assets/icons/favicon.svg', depth)}" alt="Tarifa Pro" class="brand-logo">
       <span>Tarifa <span class="brand-gradient">Pro</span></span>
     </a>
     <nav class="main-nav" aria-label="Navegación principal">
-      <a href="{route_url('calculadora-freelance')}" class="{"active" if active == 'calc' else ""}">🧮 Calculadora</a>
-      <a href="{route_url('generador-presupuestos')}" class="{"active" if active == 'inv' else ""}">📄 Presupuestos</a>
+      <a href="{route_url('calculadora-freelance', depth)}" class="{"active" if active == 'calc' else ""}">🧮 Calculadora</a>
+      <a href="{route_url('generador-presupuestos', depth)}" class="{"active" if active == 'inv' else ""}">📄 Presupuestos</a>
       {nav_links}
     </nav>
   </div>
 </header>
 """.strip()
 
-def footer() -> str:
+def footer(depth: int = 0) -> str:
     return f"""
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <a class="brand" href="{route_url()}" style="margin-bottom: 14px;">
-          <img src="{asset_url('assets/icons/favicon.svg')}" alt="Tarifa Pro" class="brand-logo">
+        <a class="brand" href="{route_url('', depth)}" style="margin-bottom: 14px;">
+          <img src="{asset_url('assets/icons/favicon.svg', depth)}" alt="Tarifa Pro" class="brand-logo">
           <span>Tarifa <span class="brand-gradient">Pro</span></span>
         </a>
         <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 360px;">
@@ -122,21 +124,21 @@ def footer() -> str:
       <div class="footer-col">
         <h4>Herramientas & Secciones</h4>
         <ul class="footer-links">
-          <li><a href="{route_url('calculadora-freelance')}">Calculadora de Tarifa por Hora</a></li>
-          <li><a href="{route_url('generador-presupuestos')}">Generador de Presupuestos PDF</a></li>
-          <li><a href="{route_url('desarrollo-web')}">Tarifas de Programación</a></li>
-          <li><a href="{route_url('diseno-multimedia')}">Tarifas de Diseño UI/UX</a></li>
-          <li><a href="{route_url('marketing-digital')}">Tarifas de Marketing Digital</a></li>
+          <li><a href="{route_url('calculadora-freelance', depth)}">Calculadora de Tarifa por Hora</a></li>
+          <li><a href="{route_url('generador-presupuestos', depth)}">Generador de Presupuestos PDF</a></li>
+          <li><a href="{route_url('desarrollo-web', depth)}">Tarifas de Programación</a></li>
+          <li><a href="{route_url('diseno-multimedia', depth)}">Tarifas de Diseño UI/UX</a></li>
+          <li><a href="{route_url('marketing-digital', depth)}">Tarifas de Marketing Digital</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Legal & Soporte</h4>
         <ul class="footer-links">
-          <li><a href="{route_url('privacidad')}">Política de Privacidad</a></li>
-          <li><a href="{route_url('terminos')}">Términos de Servicio</a></li>
-          <li><a href="{route_url('cookies')}">Política de Cookies</a></li>
-          <li><a href="{route_url('sobre-tarifa-pro')}">Sobre el Proyecto (EEAT)</a></li>
-          <li><a href="{route_url('contacto')}">Contacto</a></li>
+          <li><a href="{route_url('privacidad', depth)}">Política de Privacidad</a></li>
+          <li><a href="{route_url('terminos', depth)}">Términos de Servicio</a></li>
+          <li><a href="{route_url('cookies', depth)}">Política de Cookies</a></li>
+          <li><a href="{route_url('sobre-tarifa-pro', depth)}">Sobre el Proyecto (EEAT)</a></li>
+          <li><a href="{route_url('contacto', depth)}">Contacto</a></li>
         </ul>
       </div>
     </div>
@@ -145,26 +147,27 @@ def footer() -> str:
     </div>
   </div>
 </footer>
-<script src="{asset_url('assets/js/search.js')}" defer></script>
+<script src="{asset_url('assets/js/search.js', depth)}" defer></script>
 """.strip()
 
 def build_home():
+    depth = 0
     cards = []
     for c in CATEGORIES:
         slug = c['slug']
         icon = c['icon']
         name = esc(c['name'])
         desc = esc(c['description'])
-        url = route_url(slug)
+        url = route_url(slug, depth)
         card = f'<a href="{url}" class="card"><div><div class="card-icon">{icon}</div><h3>{name}</h3><p>{desc}</p></div></a>'
         cards.append(card)
     categories_html = "\n".join(cards)
 
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Tarifa Pro | Calculadora de Tarifas y Precios Freelance 2026", SITE['description'], f"{SITE_URL}/")}
+{head("Tarifa Pro | Calculadora de Tarifas y Precios Freelance 2026", SITE['description'], f"{SITE_URL}/", depth)}
 <body>
-  {header()}
+  {header('', depth)}
   
   <main>
     <section class="hero">
@@ -175,7 +178,7 @@ def build_home():
         
         <div class="search-container">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" placeholder="Busca por profesión o país (ej: Desarrollador React en México, Editor en España...)">
+          <input type="text" id="search-input" class="search-input" data-index-path="{asset_url('assets/js/search-index.json', depth)}" placeholder="Busca por profesión o país (ej: Desarrollador React en México, Editor en España...)">
           <div id="search-results" class="search-results"></div>
         </div>
       </div>
@@ -274,21 +277,22 @@ def build_home():
     </section>
   </main>
 
-  {footer()}
-  <script src="{asset_url('assets/js/calculator.js')}"></script>
+  {footer(depth)}
+  <script src="{asset_url('assets/js/calculator.js', depth)}"></script>
 </body>
 </html>
 """
     (DOCS / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_calculator_page():
+    depth = 1
     folder = DOCS / "calculadora-freelance"
     folder.mkdir(parents=True, exist_ok=True)
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Calculadora de Tarifa Freelance por Hora | Tarifa Pro", "Calcula exactamente cuánto debes cobrar por hora y por proyecto según tus gastos e impuestos.", f"{SITE_URL}/calculadora-freelance/")}
+{head("Calculadora de Tarifa Freelance por Hora | Tarifa Pro", "Calcula exactamente cuánto debes cobrar por hora y por proyecto según tus gastos e impuestos.", f"{SITE_URL}/calculadora-freelance/", depth)}
 <body>
-  {header('calc')}
+  {header('calc', depth)}
   <main class="container" style="padding-top: 40px;">
     <div style="text-align: center; margin-bottom: 30px;">
       <span class="badge-pill">🧮 Herramienta Financiera</span>
@@ -352,20 +356,21 @@ def build_calculator_page():
       </div>
     </div>
   </main>
-  {footer()}
-  <script src="{asset_url('assets/js/calculator.js')}"></script>
+  {footer(depth)}
+  <script src="{asset_url('assets/js/calculator.js', depth)}"></script>
 </body>
 </html>"""
     (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_invoice_page():
+    depth = 1
     folder = DOCS / "generador-presupuestos"
     folder.mkdir(parents=True, exist_ok=True)
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Generador de Presupuestos y Cotizaciones PDF | Tarifa Pro", "Crea presupuestos comerciales profesionales descargables e imprimibles en PDF con cálculo automático de impuestos.", f"{SITE_URL}/generador-presupuestos/")}
+{head("Generador de Presupuestos y Cotizaciones PDF | Tarifa Pro", "Crea presupuestos comerciales profesionales descargables e imprimibles en PDF con cálculo automático de impuestos.", f"{SITE_URL}/generador-presupuestos/", depth)}
 <body>
-  {header('inv')}
+  {header('inv', depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <div style="text-align: center; margin-bottom: 30px;">
       <span class="badge-pill">📄 Documento Comercial</span>
@@ -446,13 +451,14 @@ def build_invoice_page():
       </div>
     </div>
   </main>
-  {footer()}
-  <script src="{asset_url('assets/js/invoice.js')}"></script>
+  {footer(depth)}
+  <script src="{asset_url('assets/js/invoice.js', depth)}"></script>
 </body>
 </html>"""
     (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_category_pages():
+    depth = 1
     for c in CATEGORIES:
         folder = DOCS / c['slug']
         folder.mkdir(parents=True, exist_ok=True)
@@ -466,16 +472,16 @@ def build_category_pages():
             mid = esc(a['hourly_mid'])
             curr = esc(a['currency'])
             exc = esc(a['excerpt'][:100])
-            url = route_url(c['slug'] + '/' + a['slug'])
+            url = route_url(c['slug'] + '/' + a['slug'], depth)
             card = f'<a href="{url}" class="card" style="padding: 20px;"><div><span class="badge-pill" style="font-size: 0.75rem; margin-bottom: 8px;">{country_name} ({country_code})</span><h3 style="font-size: 1.15rem; margin-bottom: 8px;">{art_title}</h3><p style="font-size: 0.88rem;">Tarifa recomendada: <strong>{mid}/h</strong> ({curr}). {exc}...</p></div></a>'
             cards.append(card)
         cards_html = "\n".join(cards)
 
         html_content = f"""<!doctype html>
 <html lang="es">
-{head(f"{c['name']} - Tarifas y Cotizaciones Freelance | Tarifa Pro", c['description'], f"{SITE_URL}/{c['slug']}/")}
+{head(f"{c['name']} - Tarifas y Cotizaciones Freelance | Tarifa Pro", c['description'], f"{SITE_URL}/{c['slug']}/", depth)}
 <body>
-  {header(c['slug'])}
+  {header(c['slug'], depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <span class="badge-pill">{c['icon']} Categoría Especializada</span>
     <h1 style="font-size: 2.2rem; margin-bottom: 12px;">{esc(c['name'])}</h1>
@@ -485,12 +491,13 @@ def build_category_pages():
       {cards_html}
     </div>
   </main>
-  {footer()}
+  {footer(depth)}
 </body>
 </html>"""
         (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_article_pages():
+    depth = 2
     for a in ARTICLES:
         folder = DOCS / a["category"] / a["slug"]
         folder.mkdir(parents=True, exist_ok=True)
@@ -501,14 +508,14 @@ def build_article_pages():
         
         html_content = f"""<!doctype html>
 <html lang="es">
-{head(f"{a['title']} | Tarifa Pro", a['excerpt'], f"{SITE_URL}/{a['category']}/{a['slug']}/", "article")}
+{head(f"{a['title']} | Tarifa Pro", a['excerpt'], f"{SITE_URL}/{a['category']}/{a['slug']}/", depth, "article")}
 <body>
-  {header(a['category'])}
+  {header(a['category'], depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <div style="max-width: 880px; margin: 0 auto;">
       <nav style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 16px;">
-        <a href="{route_url()}" style="color: var(--text-muted); text-decoration: none;">Inicio</a> / 
-        <a href="{route_url(a['category'])}" style="color: var(--text-muted); text-decoration: none;">{cat_name}</a> / 
+        <a href="{route_url('', depth)}" style="color: var(--text-muted); text-decoration: none;">Inicio</a> / 
+        <a href="{route_url(a['category'], depth)}" style="color: var(--text-muted); text-decoration: none;">{cat_name}</a> / 
         <span>{esc(a['country'])}</span>
       </nav>
 
@@ -561,18 +568,19 @@ def build_article_pages():
         </div>
 
         <div style="text-align: center; margin: 40px 0;">
-          <a href="{route_url('calculadora-freelance')}" class="btn btn-primary" style="margin-right: 12px;">🧮 Calcular mi tarifa personalizada</a>
-          <a href="{route_url('generador-presupuestos')}" class="btn btn-secondary">📄 Crear presupuesto en PDF</a>
+          <a href="{route_url('calculadora-freelance', depth)}" class="btn btn-primary" style="margin-right: 12px;">🧮 Calcular mi tarifa personalizada</a>
+          <a href="{route_url('generador-presupuestos', depth)}" class="btn btn-secondary">📄 Crear presupuesto en PDF</a>
         </div>
       </article>
     </div>
   </main>
-  {footer()}
+  {footer(depth)}
 </body>
 </html>"""
         (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_legal_pages():
+    depth = 1
     legals = [
         ("privacidad", "Política de Privacidad", "Información sobre tratamiento de datos, cookies de AdSense y privacidad en Tarifa Pro."),
         ("terminos", "Términos de Servicio", "Condiciones de uso de los servicios y calculadoras de Tarifa Pro."),
@@ -585,9 +593,9 @@ def build_legal_pages():
         folder.mkdir(parents=True, exist_ok=True)
         html_content = f"""<!doctype html>
 <html lang="es">
-{head(f"{title} | Tarifa Pro", desc, f"{SITE_URL}/{slug}/")}
+{head(f"{title} | Tarifa Pro", desc, f"{SITE_URL}/{slug}/", depth)}
 <body>
-  {header()}
+  {header('', depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <div class="panel-card" style="max-width: 840px; margin: 0 auto; background: var(--bg-card); padding: 36px; border-radius: 16px; border: 1px solid var(--border);">
       <h1 style="font-size: 2.2rem; margin-bottom: 16px; color: #fff;">{title}</h1>
@@ -596,11 +604,11 @@ def build_legal_pages():
       <div style="color: var(--text-muted); line-height: 1.8; display: flex; flex-direction: column; gap: 16px;">
         <p>En <strong>Tarifa Pro</strong> nos comprometemos con la transparencia, la seguridad de los usuarios y el cumplimiento de las directrices de Google AdSense y normativas internacionales de protección de datos (GDPR / TCF v2.2).</p>
         <p>{desc}</p>
-        <p>Para cualquier inquietud o solicitud de soporte, puedes escribirnos a través de nuestro formulario oficial de <a href="{route_url('contacto')}" style="color: var(--primary);">Contacto</a>.</p>
+        <p>Para cualquier inquietud o solicitud de soporte, puedes escribirnos a través de nuestro formulario oficial de <a href="{route_url('contacto', depth)}" style="color: var(--primary);">Contacto</a>.</p>
       </div>
     </div>
   </main>
-  {footer()}
+  {footer(depth)}
 </body>
 </html>"""
         (folder / "index.html").write_text(html_content, encoding="utf-8")
@@ -610,7 +618,7 @@ def build_search_index():
     for a in ARTICLES:
         search_data.append({
             "title": a["title"],
-            "url": route_url(f'{a["category"]}/{a["slug"]}'),
+            "url": f"{a['category']}/{a['slug']}/",
             "category": a["category"],
             "country": a["country"],
             "profession": a["profession"],
@@ -618,59 +626,6 @@ def build_search_index():
         })
     
     (DOCS / "assets" / "js" / "search-index.json").write_text(json.dumps(search_data, ensure_ascii=False), encoding="utf-8")
-    
-    search_js = '''document.addEventListener('DOMContentLoaded', async () => {
-  const input = document.getElementById('search-input');
-  const results = document.getElementById('search-results');
-  if (!input || !results) return;
-
-  let index = [];
-  try {
-    const res = await fetch(input.dataset.indexPath || 'assets/js/search-index.json');
-    if (res.ok) index = await res.json();
-  } catch (e) {
-    console.error('Error loading search index', e);
-  }
-
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    if (q.length < 2) {
-      results.style.display = 'none';
-      results.innerHTML = '';
-      return;
-    }
-
-    const matches = index.filter(item => 
-      item.title.toLowerCase().includes(q) || 
-      item.profession.toLowerCase().includes(q) || 
-      item.country.toLowerCase().includes(q)
-    ).slice(0, 10);
-
-    if (matches.length === 0) {
-      results.innerHTML = '<div style="padding: 16px; color: #94a3b8; text-align: center;">No se encontraron guías para esa búsqueda.</div>';
-      results.style.display = 'block';
-      return;
-    }
-
-    results.innerHTML = matches.map(m => `
-      <a href="${m.url}" class="search-result-item">
-        <div>
-          <strong style="color: #fff;">${m.title}</strong>
-          <div style="font-size: 0.8rem; color: #94a3b8;">${m.profession} &bull; ${m.country}</div>
-        </div>
-        <span style="color: #10b981; font-weight: 700;">Ver tarifa &rarr;</span>
-      </a>
-    `).join('');
-    results.style.display = 'block';
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!input.contains(e.target) && !results.contains(e.target)) {
-      results.style.display = 'none';
-    }
-  });
-});'''
-    (DOCS / "assets" / "js" / "search.js").write_text(search_js, encoding="utf-8")
 
 def build_sitemap_and_robots():
     urls = [
@@ -704,7 +659,7 @@ Sitemap: {SITE_URL}/sitemap.xml
     (DOCS / "ads.txt").write_text(ads_txt, encoding="utf-8")
 
 def main():
-    print(f"Generating Tarifa Pro for {len(ARTICLES)} guides and {len(CATEGORIES)} categories...")
+    print(f"Generating Tarifa Pro for {len(ARTICLES)} guides and {len(CATEGORIES)} categories with relative depth resolution...")
     ensure_clean_docs()
     build_home()
     build_calculator_page()
