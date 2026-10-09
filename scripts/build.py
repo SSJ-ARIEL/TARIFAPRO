@@ -47,14 +47,19 @@ def ensure_clean_docs():
     shutil.copytree(ASSETS, DOCS / "assets")
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
 
-def head(title: str, description: str, canonical: str, depth: int = 0, og_type: str = "website") -> str:
+def head(title: str, description: str, canonical: str, depth: int = 0, og_type: str = "website", indexable: bool = True) -> str:
+    ad_client = esc(SITE["adsense"]["client_id"])
+    ad_script = (
+        f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ad_client}" crossorigin="anonymous"></script>'
+        if indexable else ""
+    )
     return f"""
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(description)}">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="robots" content="{'index,follow,max-image-preview:large' if indexable else 'noindex,follow'}">
   <meta name="theme-color" content="{esc(SITE['colors']['background'])}">
   <meta name="google-site-verification" content="{esc(SITE['verification']['google_site_verification'])}">
   <meta name="google-adsense-account" content="{esc(SITE['adsense']['client_id'])}">
@@ -75,7 +80,7 @@ def head(title: str, description: str, canonical: str, depth: int = 0, og_type: 
   </script>
 
   <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={esc(SITE['adsense']['client_id'])}" crossorigin="anonymous"></script>
+  {ad_script}
 
   <meta property="og:type" content="{esc(og_type)}">
   <meta property="og:site_name" content="{esc(SITE['name'])}">
@@ -172,9 +177,9 @@ def build_home():
   <main>
     <section class="hero">
       <div class="container">
-        <span class="badge-pill">📊 Inteligencia de Mercado Freelance 2026</span>
+        <span class="badge-pill">📊 Herramientas de cotización orientativa</span>
         <h1>¿Cuánto Cobrar por tus <span>Servicios Digitales?</span></h1>
-        <p class="hero-lead">Calcula tu tarifa por hora justa, presupuesta proyectos paso a paso y consulta precios de referencia en más de 10 países.</p>
+        <p class="hero-lead">Calcula una tarifa orientativa desde tus propios gastos, prepara presupuestos y explora ejemplos de proyectos. Los importes ilustrativos no constituyen estadísticas de mercado.</p>
         
         <div class="search-container">
           <span class="search-icon">🔍</span>
@@ -262,15 +267,15 @@ def build_home():
       <article class="editorial-box">
         <h2>🛡️ Metodología y Criterios Financieros de Tarifa Pro</h2>
         <p>
-          En <strong>Tarifa Pro</strong> analizamos datos de mercado de plataformas internacionales de trabajo independiente, encuestas a profesionales remotos y tabuladores salariales promedio en Iberoamérica y Estados Unidos.
+          En <strong>Tarifa Pro</strong> ofrecemos simulaciones a partir de datos introducidos por cada persona. Las cifras precargadas y las fichas por país son ejemplos de cálculo, no resultados de encuestas salariales o tipos de cambio actualizados.
         </p>
         <p>
-          Nuestras fórmulas consideran el factor de horas no facturables (administración, prospección de clientes y descanso) para que los trabajadores independientes no queden desprotegidos ante gastos operativos o imprevistos de salud.
+          Para fijar un precio real, calcula tus gastos, considera el tiempo no facturable y contrasta tus estimaciones con propuestas comparables. El selector de moneda cambia el símbolo, pero no realiza conversiones de divisas.
         </p>
         <div class="badges-row">
-          <span class="badge-item">✓ Fórmulas Validadas con Contadores</span>
-          <span class="badge-item">✓ Actualizado a Estándares Fiscales 2026</span>
-          <span class="badge-item">✓ Adaptado a Moneda Local y USD Remoto</span>
+          <span class="badge-item">✓ Cálculos editables y orientativos</span>
+          <span class="badge-item">✓ Información fiscal a verificar localmente</span>
+          <span class="badge-item">✓ Símbolos de moneda sin conversión</span>
           <span class="badge-item">✓ Sin Registro Requerido</span>
         </div>
       </article>
@@ -297,7 +302,7 @@ def build_calculator_page():
     <div style="text-align: center; margin-bottom: 30px;">
       <span class="badge-pill">🧮 Herramienta Financiera</span>
       <h1 style="font-size: 2.4rem;">Calculadora de Tarifa por Hora y Retainer</h1>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">No regales tu trabajo. Descubre tu tarifa hora base para cubrir gastos, impuestos y generar ahorro real.</p>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Introduce tus propios gastos y horas facturables para obtener una estimación. No es una cotización de mercado ni una recomendación fiscal.</p>
     </div>
     
     <div class="calc-card" style="max-width: 900px; margin: 0 auto 60px;">
@@ -375,7 +380,7 @@ def build_invoice_page():
     <div style="text-align: center; margin-bottom: 30px;">
       <span class="badge-pill">📄 Documento Comercial</span>
       <h1 style="font-size: 2.4rem;">Generador de Presupuestos y Cotizaciones</h1>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Personaliza los datos de tu cliente, añade los entregables y genera una cotización limpia en PDF con 1 clic.</p>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Edita entregables, precios y condiciones. Utiliza la función de impresión del navegador para guardar como PDF y verifica todos los datos antes de enviarlo.</p>
     </div>
 
     <div style="max-width: 860px; margin: 0 auto;">
@@ -447,7 +452,7 @@ def build_invoice_page():
       </div>
 
       <div style="display: flex; gap: 16px; justify-content: center;">
-        <button onclick="window.print()" class="btn btn-primary">🖨️ Descargar Presupuesto en PDF / Imprimir</button>
+        <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir o guardar como PDF</button>
       </div>
     </div>
   </main>
@@ -508,7 +513,7 @@ def build_article_pages():
         
         html_content = f"""<!doctype html>
 <html lang="es">
-{head(f"{a['title']} | Tarifa Pro", a['excerpt'], f"{SITE_URL}/{a['category']}/{a['slug']}/", depth, "article")}
+{head(f"{a['title']} | Tarifa Pro", a['excerpt'], f"{SITE_URL}/{a['category']}/{a['slug']}/", depth, "article", indexable=False)}
 <body>
   {header(a['category'], depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
@@ -525,7 +530,7 @@ def build_article_pages():
 
       <!-- Pricing Summary Card -->
       <div class="calc-card" style="padding: 24px; margin-bottom: 36px; border-color: var(--border-hover);">
-        <h2 style="font-size: 1.3rem; margin-bottom: 16px; color: #fff;">📊 Tabulador de Tarifas Referenciales en {esc(a['country'])}</h2>
+        <h2 style="font-size: 1.3rem; margin-bottom: 16px; color: #fff;">📊 Ejemplo ilustrativo en {esc(a['country'])}</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
           <div style="background: #040914; padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
             <div class="result-label">Nivel Junior (1-2 años)</div>
@@ -564,7 +569,7 @@ def build_article_pages():
           Para emitir facturas legales y deducir gastos en {esc(a['country'])}, toma en cuenta:
         </p>
         <div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid var(--primary); padding: 18px; border-radius: 4px; margin-bottom: 30px;">
-          <p style="color: #e2e8f0; font-size: 0.95rem;"><strong>Régimen Fiscal:</strong> {esc(a['tax_info'])}</p>
+          <p style="color: #e2e8f0; font-size: 0.95rem;"><strong>Régimen Fiscal:</strong> Confirma los impuestos, categorías y porcentajes vigentes con la autoridad tributaria de tu país. Esta simulación no determina tu régimen fiscal.</p>
         </div>
 
         <div style="text-align: center; margin: 40px 0;">
@@ -640,8 +645,8 @@ def build_sitemap_and_robots():
     ]
     for c in CATEGORIES:
         urls.append(f"{SITE_URL}/{c['slug']}/")
-    for a in ARTICLES:
-        urls.append(f"{SITE_URL}/{a['category']}/{a['slug']}/")
+    # Pages generated by a country/profession template remain accessible for bookmarks,
+    # but are excluded from search indexing until independently reviewed and sourced.
     
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
