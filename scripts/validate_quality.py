@@ -83,6 +83,22 @@ def main() -> None:
     about = (DOCS / "sobre-tarifa-pro" / "index.html").read_text(encoding="utf-8")
     if "matriz de profesiones" not in about:
         raise AssertionError("Methodology page does not disclose data source")
+    search_index = json.loads((DOCS / "assets" / "js" / "search-index.json").read_text(encoding="utf-8"))
+    if len(search_index) != 12:
+        raise AssertionError(f"Search should only expose 12 reviewed pages, got {len(search_index)}")
+    indexed_routes = {entry["url"] for entry in search_index}
+    if not indexed_routes.issubset(INDEXABLE):
+        raise AssertionError("Search promotes routes not approved for indexing")
+    for category in [
+        "desarrollo-web", "diseno-multimedia", "marketing-digital",
+        "video-animacion", "redaccion-copywriting", "ia-automatizacion",
+        "consultoria-negocios",
+    ]:
+        text = (DOCS / category / "index.html").read_text(encoding="utf-8")
+        if "Preguntas que debes resolver antes de cotizar" not in text:
+            raise AssertionError(f"{category}: missing specific budgeting guidance")
+        if "cuanto-cobrar-" in text:
+            raise AssertionError(f"{category}: still promotes templated rates")
     # These three editorial articles must contain worked examples and be independent.
     for slug in [
         "calcular-tarifa-hora-freelance",
