@@ -477,6 +477,15 @@ def build_invoice_page():
     (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_category_pages():
+    category_notes = {
+        "desarrollo-web": "Separa descubrimiento, diseño, desarrollo, pruebas, publicación y mantenimiento. Cotiza las integraciones y revisiones como entregables medibles y aclara quién aporta textos, dominios y servicios externos.",
+        "diseno-multimedia": "Especifica número de pantallas o piezas, versiones, licencias de imágenes, archivos editables y rondas de cambios. Un diseño con transferencia de derechos puede requerir condiciones distintas de una pieza de uso limitado.",
+        "marketing-digital": "Distingue honorarios de gestión y presupuesto de anuncios. Define métricas, periodicidad de informes y límites del servicio, sin garantizar conversiones o resultados dependientes de terceros.",
+        "video-animacion": "Pide duración final, material disponible, formato de entrega, cantidad de correcciones, subtítulos y complejidad de efectos. Un video breve con animación compleja no se presupuesta igual que un recorte simple.",
+        "redaccion-copywriting": "Aclara investigación, entrevistas, extensión, edición SEO, verificación de fuentes, derechos y cantidad de revisiones. La cantidad de palabras por sí sola no explica el trabajo de una pieza editorial.",
+        "ia-automatizacion": "Delimita procesos, accesos, integraciones autorizadas, pruebas, soporte y responsabilidades sobre los datos. Separa costo de configuración de pagos recurrentes por proveedores o consumo.",
+        "consultoria-negocios": "Define diagnóstico, reuniones, entregables escritos, horas de seguimiento, supuestos y límites. No prometas resultados financieros que dependen de decisiones o condiciones fuera del alcance contratado.",
+    }
     depth = 1
     for c in CATEGORIES:
         folder = DOCS / c['slug']
@@ -509,6 +518,11 @@ def build_category_pages():
     <div class="categories-grid">
       {cards_html}
     </div>
+    <section class="panel-card" style="margin-top:36px;padding:28px;line-height:1.8;">
+      <h2>Cómo preparar un presupuesto de {esc(c['name'])}</h2>
+      <p>{esc(category_notes[c['slug']])}</p>
+      <p>Usa la <a href="{route_url('calculadora-freelance', depth)}">calculadora de tarifas</a> con tus costos reales y el <a href="{route_url('generador-presupuestos', depth)}">generador de propuestas</a> para anotar alcance, plazos y condiciones. Las cifras enlazadas en las fichas son ejemplos matemáticos, no datos salariales certificados.</p>
+    </section>
   </main>
   {footer(depth)}
 </body>
@@ -608,6 +622,45 @@ def build_legal_pages():
         ("sobre-tarifa-pro", "Sobre Tarifa Pro y Metodología", "Estándares editoriales, origen de los datos y criterios de validación de tarifas freelance."),
         ("contacto", "Contacto y Soporte", "Canal directo para consultas, sugerencias y correcciones de tarifas.")
     ]
+    legal_bodies = {
+        "privacidad": """
+          <h2>Datos introducidos en las herramientas</h2>
+          <p>Las calculadoras de esta web permiten editar cifras y ejemplos en tu navegador. Antes de compartir una cotización o una captura, comprueba que no contenga información privada de clientes.</p>
+          <h2>Servicios externos</h2>
+          <p>El sitio incluye scripts de Google Analytics, Google AdSense y CookieYes. Estos proveedores pueden tratar información según sus configuraciones y sus propias políticas. Consulta el panel de consentimiento cuando esté disponible y la documentación de cada proveedor para conocer las opciones de control.</p>
+          <h2>Consultas y correcciones</h2>
+          <p>Si detectas un dato desactualizado, utiliza el <a href="https://github.com/SSJ-ARIEL/TARIFAPRO/issues">repositorio público de incidencias</a>. No publiques allí datos personales ni documentos confidenciales.</p>
+        """,
+        "terminos": """
+          <h2>Finalidad de las herramientas</h2>
+          <p>Tarifa Pro ofrece cálculos y plantillas como material educativo. No garantiza ingresos, condiciones comerciales, salarios ni la aceptación de un presupuesto por clientes o autoridades.</p>
+          <h2>Responsabilidad de las decisiones</h2>
+          <p>Comprueba los costos, horas, monedas, requisitos fiscales y cláusulas contractuales antes de usar los resultados. Los porcentajes que aparecen al abrir la herramienta son valores de demostración, no recomendaciones universales.</p>
+          <h2>Limitaciones</h2>
+          <p>Los rangos precargados en fichas de países y profesiones no equivalen a una encuesta de mercado verificada. Para casos concretos, acude a fuentes oficiales y profesionales cualificados.</p>
+        """,
+        "cookies": """
+          <h2>Qué servicios se cargan</h2>
+          <p>La web utiliza recursos de Google Analytics para medición de visitas, Google AdSense para funciones publicitarias y CookieYes para presentar opciones de consentimiento. La disponibilidad efectiva de anuncios depende de la aprobación de Google.</p>
+          <h2>Control y preferencias</h2>
+          <p>Revisa las opciones del aviso de consentimiento y la configuración de cookies de tu navegador. Google y CookieYes publican información adicional sobre los datos que pueden tratar; no interpretes la presencia de estos scripts como una garantía de certificación regulatoria.</p>
+        """,
+        "sobre-tarifa-pro": """
+          <h2>Qué puedes hacer aquí</h2>
+          <p>Calcula una tarifa orientativa desde tus propios gastos y horas facturables y prepara una propuesta que puedes editar e imprimir. No necesitamos inventar estadísticas para mostrar cómo funciona una fórmula.</p>
+          <h2>Cómo se calcula</h2>
+          <p>La calculadora convierte tus gastos mensuales en un objetivo anual, suma el margen de ahorro elegido, ajusta por el porcentaje de impuestos que introduces y divide entre las horas facturables estimadas para el año. El precio final sigue dependiendo de tu proyecto y de tu mercado.</p>
+          <h2>Cómo interpretamos los datos de ejemplo</h2>
+          <p>Las fichas de profesión y país proceden de una matriz de profesiones y multiplicadores de divisas fijos. No se actualizan con cotizaciones en directo ni se han validado aquí mediante un estudio salarial independiente. Permanecen fuera del índice hasta disponer de revisión y fuentes verificables.</p>
+          <h2>Correcciones</h2>
+          <p>Las observaciones documentadas pueden comunicarse en <a href="https://github.com/SSJ-ARIEL/TARIFAPRO/issues">GitHub Issues</a>. Evita compartir datos personales en reportes públicos.</p>
+        """,
+        "contacto": """
+          <h2>Envíanos una observación sobre la web</h2>
+          <p>Puedes comunicar errores de funcionamiento, enlaces rotos, propuestas de mejora o datos que necesiten verificación mediante el <a href="https://github.com/SSJ-ARIEL/TARIFAPRO/issues">formulario de incidencias de GitHub</a>.</p>
+          <p>Selecciona «New issue», describe la página afectada y los pasos para reproducir el problema. Ese espacio es público: no incluyas correo privado de clientes, documentos, identificadores fiscales ni contraseñas.</p>
+        """,
+    }
     for slug, title, desc in legals:
         folder = DOCS / slug
         folder.mkdir(parents=True, exist_ok=True)
@@ -619,12 +672,10 @@ def build_legal_pages():
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <div class="panel-card" style="max-width: 840px; margin: 0 auto; background: var(--bg-card); padding: 36px; border-radius: 16px; border: 1px solid var(--border);">
       <h1 style="font-size: 2.2rem; margin-bottom: 16px; color: #fff;">{title}</h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">Última actualización: Agosto 2026</p>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">Revisión editorial: octubre de 2026</p>
       
       <div style="color: var(--text-muted); line-height: 1.8; display: flex; flex-direction: column; gap: 16px;">
-        <p>En <strong>Tarifa Pro</strong> nos comprometemos con la transparencia, la seguridad de los usuarios y el cumplimiento de las directrices de Google AdSense y normativas internacionales de protección de datos (GDPR / TCF v2.2).</p>
-        <p>{desc}</p>
-        <p>Para cualquier inquietud o solicitud de soporte, puedes escribirnos a través de nuestro formulario oficial de <a href="{route_url('contacto', depth)}" style="color: var(--primary);">Contacto</a>.</p>
+        {legal_bodies[slug]}
       </div>
     </div>
   </main>
