@@ -192,7 +192,7 @@ def build_home():
         
         <div class="search-container">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" data-index-path="{asset_url('assets/js/search-index.json', depth)}" placeholder="Busca por profesión o país (ej: Desarrollador React en México, Editor en España...)">
+          <input type="text" id="search-input" class="search-input" data-index-path="{asset_url('assets/js/search-index.json', depth)}" placeholder="Busca una guía, categoría o calculadora...">
           <div id="search-results" class="search-results"></div>
         </div>
       </div>
@@ -501,24 +501,65 @@ def build_category_pages():
         "ia-automatizacion": "Delimita procesos, accesos, integraciones autorizadas, pruebas, soporte y responsabilidades sobre los datos. Separa costo de configuración de pagos recurrentes por proveedores o consumo.",
         "consultoria-negocios": "Define diagnóstico, reuniones, entregables escritos, horas de seguimiento, supuestos y límites. No prometas resultados financieros que dependen de decisiones o condiciones fuera del alcance contratado.",
     }
+    category_questions = {
+        "desarrollo-web": [
+            "¿Cuántas pantallas, integraciones y formularios están realmente incluidos?",
+            "¿Quién entrega textos, imágenes, dominio, alojamiento y accesos de prueba?",
+            "¿Cuántas rondas de cambio y cuántos días de soporte ofreces?",
+            "¿Cómo se presupuestan futuras funciones después de aprobar el alcance?",
+        ],
+        "diseno-multimedia": [
+            "¿Qué formatos, tamaños y versiones necesita el cliente?",
+            "¿Cuántas propuestas iniciales y revisiones están incluidas?",
+            "¿Se entregan archivos editables y qué permisos de uso se transfieren?",
+            "¿Habrá que comprar recursos visuales o tipografías?",
+        ],
+        "marketing-digital": [
+            "¿Cuál es el objetivo medible de cada campaña y quién aprueba piezas?",
+            "¿Qué parte del costo corresponde a honorarios y cuál a la plataforma de anuncios?",
+            "¿Quién entrega la página de destino y configura las mediciones?",
+            "¿Qué informes, plazos y dependencias quedan por escrito?",
+        ],
+        "video-animacion": [
+            "¿Cuántas horas de material bruto deben revisarse?",
+            "¿Qué proporciones, duraciones y subtítulos se entregarán?",
+            "¿Quién aporta música y materiales con licencias válidas?",
+            "¿Cuántas revisiones de audio, montaje y grafismos se incluyen?",
+        ],
+        "redaccion-copywriting": [
+            "¿El trabajo incluye investigar fuentes, entrevistar o solo editar textos entregados?",
+            "¿Qué longitud aproximada, tono, piezas y plazos fueron acordados?",
+            "¿Quién revisa exactitud técnica, derechos y atribuciones?",
+            "¿Cuántas rondas de correcciones están cubiertas?",
+        ],
+        "ia-automatizacion": [
+            "¿Cuál es el proceso actual y qué resultado concreto debe producir la automatización?",
+            "¿Qué sistemas, permisos, datos y proveedores se autorizan?",
+            "¿Quién paga suscripciones, consumo de API y mantenimiento?",
+            "¿Cómo se prueban fallos, acceso a datos y un posible retorno al proceso manual?",
+        ],
+        "consultoria-negocios": [
+            "¿Cuál es la pregunta de negocio y qué evidencia aportará el cliente?",
+            "¿Cuántas reuniones, entrevistas y entregables están incluidos?",
+            "¿Qué partes son recomendaciones y cuáles requieren aprobación del cliente?",
+            "¿Cómo se definen confidencialidad, seguimiento y tareas fuera de alcance?",
+        ],
+    }
     depth = 1
     for c in CATEGORIES:
         folder = DOCS / c['slug']
         folder.mkdir(parents=True, exist_ok=True)
-        cat_articles = [a for a in ARTICLES if a["category"] == c["slug"]]
-        
+        # Show useful, manually written guides, not 30 links to unverified templates.
         cards = []
-        for a in cat_articles[:30]:
-            country_name = esc(a['country'])
-            country_code = esc(a['country_code'])
-            art_title = esc(a['title'])
-            mid = esc(a['hourly_mid'])
-            curr = esc(a['currency'])
-            exc = esc(a['excerpt'][:100])
-            url = route_url(c['slug'] + '/' + a['slug'], depth)
-            card = f'<a href="{url}" class="card" style="padding: 20px;"><div><span class="badge-pill" style="font-size: 0.75rem; margin-bottom: 8px;">{country_name} ({country_code})</span><h3 style="font-size: 1.15rem; margin-bottom: 8px;">{art_title}</h3><p style="font-size: 0.88rem;">Tarifa recomendada: <strong>{mid}/h</strong> ({curr}). {exc}...</p></div></a>'
-            cards.append(card)
+        for guide in GUIDES:
+            url = route_url("guias/" + guide["slug"], depth)
+            cards.append(
+                f'<a href="{url}" class="card" style="padding:20px;">'
+                f'<div><h3>{esc(guide["title"])}</h3>'
+                f'<p>{esc(guide["summary"])}</p></div></a>'
+            )
         cards_html = "\n".join(cards)
+        questions_html = "".join(f"<li>{esc(q)}</li>" for q in category_questions[c["slug"]])
 
         html_content = f"""<!doctype html>
 <html lang="es">
@@ -536,7 +577,10 @@ def build_category_pages():
     <section class="panel-card" style="margin-top:36px;padding:28px;line-height:1.8;">
       <h2>Cómo preparar un presupuesto de {esc(c['name'])}</h2>
       <p>{esc(category_notes[c['slug']])}</p>
-      <p>Usa la <a href="{route_url('calculadora-freelance', depth)}">calculadora de tarifas</a> con tus costos reales y el <a href="{route_url('generador-presupuestos', depth)}">generador de propuestas</a> para anotar alcance, plazos y condiciones. Las cifras enlazadas en las fichas son ejemplos matemáticos, no datos salariales certificados.</p>
+      <h3>Preguntas que debes resolver antes de cotizar</h3>
+      <ul>{questions_html}</ul>
+      <p>Las fichas automáticas por país y profesión no se muestran aquí porque no cuentan todavía con datos contrastados. No es responsable presentar multiplicadores fijos como tarifas oficiales ni como precios actuales.</p>
+      <p>Usa la <a href="{route_url('calculadora-freelance', depth)}">calculadora de tarifas</a> con tus costos reales y el <a href="{route_url('generador-presupuestos', depth)}">generador de propuestas</a> para anotar alcance, plazos y condiciones. Revisa el alcance concreto de tu trabajo y adapta los valores de ejemplo antes de presupuestar.</p>
     </section>
   </main>
   {footer(depth)}
@@ -745,18 +789,48 @@ def build_legal_pages():
         (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_search_index():
-    search_data = []
-    for a in ARTICLES:
+    # Search only the pages reviewed for public indexing.
+    # Preserve previous templated URLs for bookmarks, not for discovery.
+    search_data = [
+        {
+            "title": "Calculadora de tarifa freelance por hora",
+            "url": "calculadora-freelance/",
+            "profession": "Calculadora de tarifas",
+            "country": "",
+            "category": "herramientas",
+            "currency": "",
+        },
+        {
+            "title": "Generador de presupuestos y cotizaciones",
+            "url": "generador-presupuestos/",
+            "profession": "Presupuestos",
+            "country": "",
+            "category": "herramientas",
+            "currency": "",
+        },
+    ]
+    for guide in GUIDES:
         search_data.append({
-            "title": a["title"],
-            "url": f"{a['category']}/{a['slug']}/",
-            "category": a["category"],
-            "country": a["country"],
-            "profession": a["profession"],
-            "currency": a["currency"]
+            "title": guide["title"],
+            "url": "guias/" + guide["slug"] + "/",
+            "profession": "Guía práctica",
+            "country": "",
+            "category": "guias",
+            "currency": "",
         })
-    
-    (DOCS / "assets" / "js" / "search-index.json").write_text(json.dumps(search_data, ensure_ascii=False), encoding="utf-8")
+    for category in CATEGORIES:
+        search_data.append({
+            "title": category["name"],
+            "url": category["slug"] + "/",
+            "profession": category["description"],
+            "country": "",
+            "category": "categorias",
+            "currency": "",
+        })
+    (DOCS / "assets" / "js" / "search-index.json").write_text(
+        json.dumps(search_data, ensure_ascii=False), encoding="utf-8"
+    )
+
 
 def build_sitemap_and_robots():
     urls = [
