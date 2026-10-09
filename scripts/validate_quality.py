@@ -29,6 +29,9 @@ INDEXABLE = {
     "redaccion-copywriting/",
     "ia-automatizacion/",
     "consultoria-negocios/",
+    "guias/calcular-tarifa-hora-freelance/",
+    "guias/presupuestar-pagina-web-alcance/",
+    "guias/cotizar-edicion-video-entregables/",
 }
 PUBLISHER = "pub-7507181626477156"
 
@@ -80,6 +83,24 @@ def main() -> None:
     about = (DOCS / "sobre-tarifa-pro" / "index.html").read_text(encoding="utf-8")
     if "matriz de profesiones" not in about:
         raise AssertionError("Methodology page does not disclose data source")
+    # These three editorial articles must contain worked examples and be independent.
+    for slug in [
+        "calcular-tarifa-hora-freelance",
+        "presupuestar-pagina-web-alcance",
+        "cotizar-edicion-video-entregables",
+    ]:
+        file = DOCS / "guias" / slug / "index.html"
+        text = file.read_text(encoding="utf-8")
+        text_without_html = re.sub(r"<[^>]+>", " ", text)
+        if len(text_without_html.split()) < 420:
+            raise AssertionError(f"{file}: guide is too short to demonstrate its worked example")
+        if not ('"@type": "Article"' in text and 'dateModified' in text):
+            raise AssertionError(f"{file}: missing honest editorial metadata")
+        if text.count("<h1") != 1 or text.count("<h2") < 4:
+            raise AssertionError(f"{file}: missing article structure")
+        if f'<link rel="canonical" href="{BASE}guias/{slug}/">' not in text:
+            raise AssertionError(f"{file}: wrong canonical")
+    print("Worked guides and editorial disclosures checked.")
     print(f"Validated {len(html_files)} pages; {indexable_count} indexable, {noindex_count} noindex; {len(actual)} sitemap URLs.")
 
 
