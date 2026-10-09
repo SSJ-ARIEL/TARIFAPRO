@@ -170,7 +170,7 @@ def build_home():
 
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Tarifa Pro | Calculadora de Tarifas y Precios Freelance 2026", SITE['description'], f"{SITE_URL}/", depth)}
+{head("Tarifa Pro | Calculadora de tarifas y presupuestos freelance", SITE['description'], f"{SITE_URL}/", depth)}
 <body>
   {header('', depth)}
   
@@ -295,7 +295,7 @@ def build_calculator_page():
     folder.mkdir(parents=True, exist_ok=True)
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Calculadora de Tarifa Freelance por Hora | Tarifa Pro", "Calcula exactamente cuánto debes cobrar por hora y por proyecto según tus gastos e impuestos.", f"{SITE_URL}/calculadora-freelance/", depth)}
+{head("Calculadora de Tarifa Freelance por Hora | Tarifa Pro", "Estima una tarifa orientativa a partir de gastos, horas facturables y márgenes configurables.", f"{SITE_URL}/calculadora-freelance/", depth)}
 <body>
   {header('calc', depth)}
   <main class="container" style="padding-top: 40px;">
@@ -360,6 +360,14 @@ def build_calculator_page():
         </div>
       </div>
     </div>
+    <section class="panel-card" style="max-width:900px;margin:0 auto 50px;padding:28px;line-height:1.8;">
+      <h2>Cómo se obtiene la estimación</h2>
+      <p>Empieza con tus gastos mensuales personales y del negocio. La herramienta calcula el costo anual multiplicando esa cifra por doce; añade el margen de ahorro que indiques y divide entre la proporción restante tras el porcentaje estimado de impuestos. Por último, divide el objetivo anual entre las horas que prevés facturar: horas semanales multiplicadas por las semanas del año menos tus vacaciones.</p>
+      <h3>Ejemplo que puedes comprobar</h3>
+      <p>Si necesitas cubrir 1.000 unidades monetarias al mes, trabajas 20 horas facturables a la semana, descansas 4 semanas y estableces ahorro e impuestos en cero, la cuenta es 12.000 dividido entre 960 horas: 12,50 por hora antes de otros costos. Modifica cada casilla para ver el efecto real de tus supuestos.</p>
+      <h3>Qué significa y qué no significa</h3>
+      <p>El resultado es un punto de partida matemático, no el precio que pagará un cliente. Contrástalo con costos de herramientas, revisiones, alcance, demanda y presupuestos comparables. Cambiar el símbolo de moneda no convierte importes: introduce todas las cifras en la moneda seleccionada. Revisa tus obligaciones fiscales en fuentes oficiales.</p>
+    </section>
   </main>
   {footer(depth)}
   <script src="{asset_url('assets/js/calculator.js', depth)}"></script>
@@ -373,7 +381,7 @@ def build_invoice_page():
     folder.mkdir(parents=True, exist_ok=True)
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Generador de Presupuestos y Cotizaciones PDF | Tarifa Pro", "Crea presupuestos comerciales profesionales descargables e imprimibles en PDF con cálculo automático de impuestos.", f"{SITE_URL}/generador-presupuestos/", depth)}
+{head("Generador de Presupuestos y Cotizaciones PDF | Tarifa Pro", "Prepara una propuesta editable con importes e impuestos de ejemplo y guárdala con la función Imprimir como PDF.", f"{SITE_URL}/generador-presupuestos/", depth)}
 <body>
   {header('inv', depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
@@ -454,6 +462,12 @@ def build_invoice_page():
       <div style="display: flex; gap: 16px; justify-content: center;">
         <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir o guardar como PDF</button>
       </div>
+      <section class="panel-card" style="margin:32px 0;padding:28px;line-height:1.8;">
+        <h2>Lista de revisión de tu presupuesto</h2>
+        <p><strong>Alcance:</strong> define entregables, número de revisiones y exclusiones. <strong>Plazo:</strong> añade fechas de entrega y lo que debe facilitar el cliente. <strong>Pagos:</strong> escribe anticipo, hitos, medios de pago y vencimiento de la propuesta.</p>
+        <p>Las cantidades de ejemplo y el porcentaje de impuestos precargado no son un presupuesto real ni una tasa fiscal universal. Cámbialos por los que correspondan a tu servicio y verifica la normativa aplicable. Relee los datos personales antes de compartir el archivo.</p>
+        <p>La descarga se realiza desde la función «Guardar como PDF» del diálogo de impresión del navegador; no se crea una factura electrónica certificada ni se verifica la identidad de sus participantes.</p>
+      </section>
     </div>
   </main>
   {footer(depth)}
@@ -527,6 +541,7 @@ def build_article_pages():
       <span class="badge-pill">📍 {esc(a['country'])} &bull; {esc(a['currency'])}</span>
       <h1 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 16px; line-height: 1.25;">{esc(a['title'])}</h1>
       <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; margin-bottom: 30px;">{esc(a['excerpt'])}</p>
+      <p role="note" style="padding:16px;border-left:4px solid #f59e0b;line-height:1.7;background:#111827;"><strong>Importante:</strong> esta ficha es una simulación generada a partir de supuestos fijos. Sus cifras no proceden de una encuesta salarial actualizada ni representan impuestos oficiales. Se mantiene accesible para consultas anteriores, pero fuera del índice de buscadores hasta completar una revisión independiente.</p>
 
       <!-- Pricing Summary Card -->
       <div class="calc-card" style="padding: 24px; margin-bottom: 36px; border-color: var(--border-hover);">
