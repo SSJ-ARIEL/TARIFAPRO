@@ -26,10 +26,10 @@ jobs:
           python-version: "3.12"
       - name: Generate static site
         run: python scripts/build.py
+      - name: Verify output quality before deployment
+        run: python scripts/validate_quality.py
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

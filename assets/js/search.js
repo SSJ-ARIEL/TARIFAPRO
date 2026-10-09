@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <strong style="color: #fff;">${m.title}</strong>
           <div style="font-size: 0.8rem; color: #94a3b8;">${m.profession} &bull; ${m.country}</div>
         </div>
-        <span style="color: #10b981; font-weight: 700;">Ver tarifa &rarr;</span>
+        <span style="color: #10b981; font-weight: 700;">Abrir página &rarr;</span>
       </a>
     `).join('');
     results.style.display = 'block';

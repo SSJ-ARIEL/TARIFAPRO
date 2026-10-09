@@ -5,6 +5,7 @@ import html
 import shutil
 from pathlib import Path
 from content_scale import expand_articles
+from editorial_guides import GUIDES
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data"
@@ -47,14 +48,19 @@ def ensure_clean_docs():
     shutil.copytree(ASSETS, DOCS / "assets")
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
 
-def head(title: str, description: str, canonical: str, depth: int = 0, og_type: str = "website") -> str:
+def head(title: str, description: str, canonical: str, depth: int = 0, og_type: str = "website", indexable: bool = True) -> str:
+    ad_client = esc(SITE["adsense"]["client_id"])
+    ad_script = (
+        f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ad_client}" crossorigin="anonymous"></script>'
+        if indexable else ""
+    )
     return f"""
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{esc(title)}</title>
   <meta name="description" content="{esc(description)}">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="robots" content="{'index,follow,max-image-preview:large' if indexable else 'noindex,follow'}">
   <meta name="theme-color" content="{esc(SITE['colors']['background'])}">
   <meta name="google-site-verification" content="{esc(SITE['verification']['google_site_verification'])}">
   <meta name="google-adsense-account" content="{esc(SITE['adsense']['client_id'])}">
@@ -75,7 +81,7 @@ def head(title: str, description: str, canonical: str, depth: int = 0, og_type: 
   </script>
 
   <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={esc(SITE['adsense']['client_id'])}" crossorigin="anonymous"></script>
+  {ad_script}
 
   <meta property="og:type" content="{esc(og_type)}">
   <meta property="og:site_name" content="{esc(SITE['name'])}">
@@ -162,23 +168,31 @@ def build_home():
         card = f'<a href="{url}" class="card"><div><div class="card-icon">{icon}</div><h3>{name}</h3><p>{desc}</p></div></a>'
         cards.append(card)
     categories_html = "\n".join(cards)
+    guide_cards = []
+    for guide in GUIDES:
+        href = route_url("guias/" + guide["slug"], depth)
+        guide_cards.append(
+            f'<a href="{href}" class="card"><h3>{esc(guide["title"])}</h3>'
+            f'<p>{esc(guide["summary"])}</p></a>'
+        )
+    guides_html = "\n".join(guide_cards)
 
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Tarifa Pro | Calculadora de Tarifas y Precios Freelance 2026", SITE['description'], f"{SITE_URL}/", depth)}
+{head("Tarifa Pro | Calculadora de tarifas y presupuestos freelance", SITE['description'], f"{SITE_URL}/", depth)}
 <body>
   {header('', depth)}
   
   <main>
     <section class="hero">
       <div class="container">
-        <span class="badge-pill">📊 Inteligencia de Mercado Freelance 2026</span>
+        <span class="badge-pill">📊 Herramientas de cotización orientativa</span>
         <h1>¿Cuánto Cobrar por tus <span>Servicios Digitales?</span></h1>
-        <p class="hero-lead">Calcula tu tarifa por hora justa, presupuesta proyectos paso a paso y consulta precios de referencia en más de 10 países.</p>
+        <p class="hero-lead">Calcula una tarifa orientativa desde tus propios gastos, prepara presupuestos y explora ejemplos de proyectos. Los importes ilustrativos no constituyen estadísticas de mercado.</p>
         
         <div class="search-container">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" data-index-path="{asset_url('assets/js/search-index.json', depth)}" placeholder="Busca por profesión o país (ej: Desarrollador React en México, Editor en España...)">
+          <input type="text" id="search-input" class="search-input" data-index-path="{asset_url('assets/js/search-index.json', depth)}" placeholder="Busca una guía, categoría o calculadora...">
           <div id="search-results" class="search-results"></div>
         </div>
       </div>
@@ -258,19 +272,25 @@ def build_home():
         {categories_html}
       </div>
 
-      <!-- EEAT Editorial Box -->
+      <section style="margin-top:40px;margin-bottom:48px;">
+      <h2 class="section-title">Tres guías con ejemplos que puedes comprobar</h2>
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:22px;">No son listas de precios supuestamente extraídas del mercado. Cada guía describe sus supuestos, hace las cuentas y explica qué decisiones debe tomar el lector.</p>
+      <div class="categories-grid">{guides_html}</div>
+    </section>
+
+    <!-- EEAT Editorial Box -->
       <article class="editorial-box">
         <h2>🛡️ Metodología y Criterios Financieros de Tarifa Pro</h2>
         <p>
-          En <strong>Tarifa Pro</strong> analizamos datos de mercado de plataformas internacionales de trabajo independiente, encuestas a profesionales remotos y tabuladores salariales promedio en Iberoamérica y Estados Unidos.
+          En <strong>Tarifa Pro</strong> ofrecemos simulaciones a partir de datos introducidos por cada persona. Las cifras precargadas y las fichas por país son ejemplos de cálculo, no resultados de encuestas salariales o tipos de cambio actualizados.
         </p>
         <p>
-          Nuestras fórmulas consideran el factor de horas no facturables (administración, prospección de clientes y descanso) para que los trabajadores independientes no queden desprotegidos ante gastos operativos o imprevistos de salud.
+          Para fijar un precio real, calcula tus gastos, considera el tiempo no facturable y contrasta tus estimaciones con propuestas comparables. El selector de moneda cambia el símbolo, pero no realiza conversiones de divisas.
         </p>
         <div class="badges-row">
-          <span class="badge-item">✓ Fórmulas Validadas con Contadores</span>
-          <span class="badge-item">✓ Actualizado a Estándares Fiscales 2026</span>
-          <span class="badge-item">✓ Adaptado a Moneda Local y USD Remoto</span>
+          <span class="badge-item">✓ Cálculos editables y orientativos</span>
+          <span class="badge-item">✓ Información fiscal a verificar localmente</span>
+          <span class="badge-item">✓ Símbolos de moneda sin conversión</span>
           <span class="badge-item">✓ Sin Registro Requerido</span>
         </div>
       </article>
@@ -290,14 +310,14 @@ def build_calculator_page():
     folder.mkdir(parents=True, exist_ok=True)
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Calculadora de Tarifa Freelance por Hora | Tarifa Pro", "Calcula exactamente cuánto debes cobrar por hora y por proyecto según tus gastos e impuestos.", f"{SITE_URL}/calculadora-freelance/", depth)}
+{head("Calculadora de Tarifa Freelance por Hora | Tarifa Pro", "Estima una tarifa orientativa a partir de gastos, horas facturables y márgenes configurables.", f"{SITE_URL}/calculadora-freelance/", depth)}
 <body>
   {header('calc', depth)}
   <main class="container" style="padding-top: 40px;">
     <div style="text-align: center; margin-bottom: 30px;">
       <span class="badge-pill">🧮 Herramienta Financiera</span>
       <h1 style="font-size: 2.4rem;">Calculadora de Tarifa por Hora y Retainer</h1>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">No regales tu trabajo. Descubre tu tarifa hora base para cubrir gastos, impuestos y generar ahorro real.</p>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Introduce tus propios gastos y horas facturables para obtener una estimación. No es una cotización de mercado ni una recomendación fiscal.</p>
     </div>
     
     <div class="calc-card" style="max-width: 900px; margin: 0 auto 60px;">
@@ -355,6 +375,14 @@ def build_calculator_page():
         </div>
       </div>
     </div>
+    <section class="panel-card" style="max-width:900px;margin:0 auto 50px;padding:28px;line-height:1.8;">
+      <h2>Cómo se obtiene la estimación</h2>
+      <p>Empieza con tus gastos mensuales personales y del negocio. La herramienta calcula el costo anual multiplicando esa cifra por doce; añade el margen de ahorro que indiques y divide entre la proporción restante tras el porcentaje estimado de impuestos. Por último, divide el objetivo anual entre las horas que prevés facturar: horas semanales multiplicadas por las semanas del año menos tus vacaciones.</p>
+      <h3>Ejemplo que puedes comprobar</h3>
+      <p>Si necesitas cubrir 1.000 unidades monetarias al mes, trabajas 20 horas facturables a la semana, descansas 4 semanas y estableces ahorro e impuestos en cero, la cuenta es 12.000 dividido entre 960 horas: 12,50 por hora antes de otros costos. Modifica cada casilla para ver el efecto real de tus supuestos.</p>
+      <h3>Qué significa y qué no significa</h3>
+      <p>El resultado es un punto de partida matemático, no el precio que pagará un cliente. Contrástalo con costos de herramientas, revisiones, alcance, demanda y presupuestos comparables. Cambiar el símbolo de moneda no convierte importes: introduce todas las cifras en la moneda seleccionada. Revisa tus obligaciones fiscales en fuentes oficiales.</p>
+    </section>
   </main>
   {footer(depth)}
   <script src="{asset_url('assets/js/calculator.js', depth)}"></script>
@@ -368,14 +396,14 @@ def build_invoice_page():
     folder.mkdir(parents=True, exist_ok=True)
     html_content = f"""<!doctype html>
 <html lang="es">
-{head("Generador de Presupuestos y Cotizaciones PDF | Tarifa Pro", "Crea presupuestos comerciales profesionales descargables e imprimibles en PDF con cálculo automático de impuestos.", f"{SITE_URL}/generador-presupuestos/", depth)}
+{head("Generador de Presupuestos y Cotizaciones PDF | Tarifa Pro", "Prepara una propuesta editable con importes e impuestos de ejemplo y guárdala con la función Imprimir como PDF.", f"{SITE_URL}/generador-presupuestos/", depth)}
 <body>
   {header('inv', depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <div style="text-align: center; margin-bottom: 30px;">
       <span class="badge-pill">📄 Documento Comercial</span>
       <h1 style="font-size: 2.4rem;">Generador de Presupuestos y Cotizaciones</h1>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Personaliza los datos de tu cliente, añade los entregables y genera una cotización limpia en PDF con 1 clic.</p>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Edita entregables, precios y condiciones. Utiliza la función de impresión del navegador para guardar como PDF y verifica todos los datos antes de enviarlo.</p>
     </div>
 
     <div style="max-width: 860px; margin: 0 auto;">
@@ -447,8 +475,14 @@ def build_invoice_page():
       </div>
 
       <div style="display: flex; gap: 16px; justify-content: center;">
-        <button onclick="window.print()" class="btn btn-primary">🖨️ Descargar Presupuesto en PDF / Imprimir</button>
+        <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimir o guardar como PDF</button>
       </div>
+      <section class="panel-card" style="margin:32px 0;padding:28px;line-height:1.8;">
+        <h2>Lista de revisión de tu presupuesto</h2>
+        <p><strong>Alcance:</strong> define entregables, número de revisiones y exclusiones. <strong>Plazo:</strong> añade fechas de entrega y lo que debe facilitar el cliente. <strong>Pagos:</strong> escribe anticipo, hitos, medios de pago y vencimiento de la propuesta.</p>
+        <p>Las cantidades de ejemplo y el porcentaje de impuestos precargado no son un presupuesto real ni una tasa fiscal universal. Cámbialos por los que correspondan a tu servicio y verifica la normativa aplicable. Relee los datos personales antes de compartir el archivo.</p>
+        <p>La descarga se realiza desde la función «Guardar como PDF» del diálogo de impresión del navegador; no se crea una factura electrónica certificada ni se verifica la identidad de sus participantes.</p>
+      </section>
     </div>
   </main>
   {footer(depth)}
@@ -458,24 +492,74 @@ def build_invoice_page():
     (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_category_pages():
+    category_notes = {
+        "desarrollo-web": "Separa descubrimiento, diseño, desarrollo, pruebas, publicación y mantenimiento. Cotiza las integraciones y revisiones como entregables medibles y aclara quién aporta textos, dominios y servicios externos.",
+        "diseno-multimedia": "Especifica número de pantallas o piezas, versiones, licencias de imágenes, archivos editables y rondas de cambios. Un diseño con transferencia de derechos puede requerir condiciones distintas de una pieza de uso limitado.",
+        "marketing-digital": "Distingue honorarios de gestión y presupuesto de anuncios. Define métricas, periodicidad de informes y límites del servicio, sin garantizar conversiones o resultados dependientes de terceros.",
+        "video-animacion": "Pide duración final, material disponible, formato de entrega, cantidad de correcciones, subtítulos y complejidad de efectos. Un video breve con animación compleja no se presupuesta igual que un recorte simple.",
+        "redaccion-copywriting": "Aclara investigación, entrevistas, extensión, edición SEO, verificación de fuentes, derechos y cantidad de revisiones. La cantidad de palabras por sí sola no explica el trabajo de una pieza editorial.",
+        "ia-automatizacion": "Delimita procesos, accesos, integraciones autorizadas, pruebas, soporte y responsabilidades sobre los datos. Separa costo de configuración de pagos recurrentes por proveedores o consumo.",
+        "consultoria-negocios": "Define diagnóstico, reuniones, entregables escritos, horas de seguimiento, supuestos y límites. No prometas resultados financieros que dependen de decisiones o condiciones fuera del alcance contratado.",
+    }
+    category_questions = {
+        "desarrollo-web": [
+            "¿Cuántas pantallas, integraciones y formularios están realmente incluidos?",
+            "¿Quién entrega textos, imágenes, dominio, alojamiento y accesos de prueba?",
+            "¿Cuántas rondas de cambio y cuántos días de soporte ofreces?",
+            "¿Cómo se presupuestan futuras funciones después de aprobar el alcance?",
+        ],
+        "diseno-multimedia": [
+            "¿Qué formatos, tamaños y versiones necesita el cliente?",
+            "¿Cuántas propuestas iniciales y revisiones están incluidas?",
+            "¿Se entregan archivos editables y qué permisos de uso se transfieren?",
+            "¿Habrá que comprar recursos visuales o tipografías?",
+        ],
+        "marketing-digital": [
+            "¿Cuál es el objetivo medible de cada campaña y quién aprueba piezas?",
+            "¿Qué parte del costo corresponde a honorarios y cuál a la plataforma de anuncios?",
+            "¿Quién entrega la página de destino y configura las mediciones?",
+            "¿Qué informes, plazos y dependencias quedan por escrito?",
+        ],
+        "video-animacion": [
+            "¿Cuántas horas de material bruto deben revisarse?",
+            "¿Qué proporciones, duraciones y subtítulos se entregarán?",
+            "¿Quién aporta música y materiales con licencias válidas?",
+            "¿Cuántas revisiones de audio, montaje y grafismos se incluyen?",
+        ],
+        "redaccion-copywriting": [
+            "¿El trabajo incluye investigar fuentes, entrevistar o solo editar textos entregados?",
+            "¿Qué longitud aproximada, tono, piezas y plazos fueron acordados?",
+            "¿Quién revisa exactitud técnica, derechos y atribuciones?",
+            "¿Cuántas rondas de correcciones están cubiertas?",
+        ],
+        "ia-automatizacion": [
+            "¿Cuál es el proceso actual y qué resultado concreto debe producir la automatización?",
+            "¿Qué sistemas, permisos, datos y proveedores se autorizan?",
+            "¿Quién paga suscripciones, consumo de API y mantenimiento?",
+            "¿Cómo se prueban fallos, acceso a datos y un posible retorno al proceso manual?",
+        ],
+        "consultoria-negocios": [
+            "¿Cuál es la pregunta de negocio y qué evidencia aportará el cliente?",
+            "¿Cuántas reuniones, entrevistas y entregables están incluidos?",
+            "¿Qué partes son recomendaciones y cuáles requieren aprobación del cliente?",
+            "¿Cómo se definen confidencialidad, seguimiento y tareas fuera de alcance?",
+        ],
+    }
     depth = 1
     for c in CATEGORIES:
         folder = DOCS / c['slug']
         folder.mkdir(parents=True, exist_ok=True)
-        cat_articles = [a for a in ARTICLES if a["category"] == c["slug"]]
-        
+        # Show useful, manually written guides, not 30 links to unverified templates.
         cards = []
-        for a in cat_articles[:30]:
-            country_name = esc(a['country'])
-            country_code = esc(a['country_code'])
-            art_title = esc(a['title'])
-            mid = esc(a['hourly_mid'])
-            curr = esc(a['currency'])
-            exc = esc(a['excerpt'][:100])
-            url = route_url(c['slug'] + '/' + a['slug'], depth)
-            card = f'<a href="{url}" class="card" style="padding: 20px;"><div><span class="badge-pill" style="font-size: 0.75rem; margin-bottom: 8px;">{country_name} ({country_code})</span><h3 style="font-size: 1.15rem; margin-bottom: 8px;">{art_title}</h3><p style="font-size: 0.88rem;">Tarifa recomendada: <strong>{mid}/h</strong> ({curr}). {exc}...</p></div></a>'
-            cards.append(card)
+        for guide in GUIDES:
+            url = route_url("guias/" + guide["slug"], depth)
+            cards.append(
+                f'<a href="{url}" class="card" style="padding:20px;">'
+                f'<div><h3>{esc(guide["title"])}</h3>'
+                f'<p>{esc(guide["summary"])}</p></div></a>'
+            )
         cards_html = "\n".join(cards)
+        questions_html = "".join(f"<li>{esc(q)}</li>" for q in category_questions[c["slug"]])
 
         html_content = f"""<!doctype html>
 <html lang="es">
@@ -490,11 +574,64 @@ def build_category_pages():
     <div class="categories-grid">
       {cards_html}
     </div>
+    <section class="panel-card" style="margin-top:36px;padding:28px;line-height:1.8;">
+      <h2>Cómo preparar un presupuesto de {esc(c['name'])}</h2>
+      <p>{esc(category_notes[c['slug']])}</p>
+      <h3>Preguntas que debes resolver antes de cotizar</h3>
+      <ul>{questions_html}</ul>
+      <p>Las fichas automáticas por país y profesión no se muestran aquí porque no cuentan todavía con datos contrastados. No es responsable presentar multiplicadores fijos como tarifas oficiales ni como precios actuales.</p>
+      <p>Usa la <a href="{route_url('calculadora-freelance', depth)}">calculadora de tarifas</a> con tus costos reales y el <a href="{route_url('generador-presupuestos', depth)}">generador de propuestas</a> para anotar alcance, plazos y condiciones. Revisa el alcance concreto de tu trabajo y adapta los valores de ejemplo antes de presupuestar.</p>
+    </section>
   </main>
   {footer(depth)}
 </body>
 </html>"""
         (folder / "index.html").write_text(html_content, encoding="utf-8")
+
+def build_editorial_guides():
+    depth = 2
+    for guide in GUIDES:
+        folder = DOCS / "guias" / guide["slug"]
+        folder.mkdir(parents=True, exist_ok=True)
+        canonical = f"{SITE_URL}/guias/{guide['slug']}/"
+        schema = json.dumps({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": guide["title"],
+            "description": guide["description"],
+            "author": {"@type": "Organization", "name": SITE["author"]},
+            "publisher": {"@type": "Organization", "name": SITE["name"]},
+            "datePublished": "2026-10-09",
+            "dateModified": "2026-10-09",
+            "mainEntityOfPage": canonical,
+        }, ensure_ascii=False)
+        page = f"""<!doctype html>
+<html lang="es">
+{head(guide["title"] + " | Tarifa Pro", guide["description"], canonical, depth, "article")}
+<body>
+  {header("", depth)}
+  <main class="container" style="padding-top:48px;padding-bottom:60px;">
+    <nav aria-label="Ruta" style="margin-bottom:22px;line-height:1.7;">
+      <a href="{route_url('', depth)}">Inicio</a> / Guías / {esc(guide["title"])}
+    </nav>
+    <div class="panel-card" style="max-width:920px;margin:0 auto;padding:clamp(22px,5vw,48px);">
+      <p class="badge-pill">Guía práctica revisada el 9 de octubre de 2026</p>
+      <h1 style="font-size:clamp(1.7rem,4vw,2.8rem);line-height:1.2;margin:16px 0;">{esc(guide["title"])}</h1>
+      <p style="color:var(--text-muted);font-size:1.15rem;line-height:1.8;margin-bottom:28px;">{esc(guide["summary"])}</p>
+      <article class="guide-content" style="color:var(--text-main);font-size:1.05rem;line-height:1.9;">
+        {guide["html"]}
+      </article>
+      <p style="margin-top:32px;padding:18px;border-left:4px solid var(--primary);line-height:1.8;">
+        <strong>Nota editorial:</strong> los números son ejemplos elaborados para explicar un método, no datos reales de mercado, tipos de cambio ni asesoría tributaria. Consulta la <a href="{route_url('sobre-tarifa-pro', depth)}">metodología</a> para conocer los límites de la herramienta.
+      </p>
+      <script type="application/ld+json">{schema}</script>
+    </div>
+  </main>
+  {footer(depth)}
+</body>
+</html>"""
+        (folder / "index.html").write_text(page, encoding="utf-8")
+
 
 def build_article_pages():
     depth = 2
@@ -508,7 +645,7 @@ def build_article_pages():
         
         html_content = f"""<!doctype html>
 <html lang="es">
-{head(f"{a['title']} | Tarifa Pro", a['excerpt'], f"{SITE_URL}/{a['category']}/{a['slug']}/", depth, "article")}
+{head(f"{a['title']} | Tarifa Pro", a['excerpt'], f"{SITE_URL}/{a['category']}/{a['slug']}/", depth, "article", indexable=False)}
 <body>
   {header(a['category'], depth)}
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
@@ -522,10 +659,11 @@ def build_article_pages():
       <span class="badge-pill">📍 {esc(a['country'])} &bull; {esc(a['currency'])}</span>
       <h1 style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 16px; line-height: 1.25;">{esc(a['title'])}</h1>
       <p style="color: var(--text-muted); font-size: 1.15rem; line-height: 1.6; margin-bottom: 30px;">{esc(a['excerpt'])}</p>
+      <p role="note" style="padding:16px;border-left:4px solid #f59e0b;line-height:1.7;background:#111827;"><strong>Importante:</strong> esta ficha es una simulación generada a partir de supuestos fijos. Sus cifras no proceden de una encuesta salarial actualizada ni representan impuestos oficiales. Se mantiene accesible para consultas anteriores, pero fuera del índice de buscadores hasta completar una revisión independiente.</p>
 
       <!-- Pricing Summary Card -->
       <div class="calc-card" style="padding: 24px; margin-bottom: 36px; border-color: var(--border-hover);">
-        <h2 style="font-size: 1.3rem; margin-bottom: 16px; color: #fff;">📊 Tabulador de Tarifas Referenciales en {esc(a['country'])}</h2>
+        <h2 style="font-size: 1.3rem; margin-bottom: 16px; color: #fff;">📊 Ejemplo ilustrativo en {esc(a['country'])}</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
           <div style="background: #040914; padding: 16px; border-radius: 8px; border: 1px solid var(--border);">
             <div class="result-label">Nivel Junior (1-2 años)</div>
@@ -564,7 +702,7 @@ def build_article_pages():
           Para emitir facturas legales y deducir gastos en {esc(a['country'])}, toma en cuenta:
         </p>
         <div style="background: rgba(16, 185, 129, 0.08); border-left: 4px solid var(--primary); padding: 18px; border-radius: 4px; margin-bottom: 30px;">
-          <p style="color: #e2e8f0; font-size: 0.95rem;"><strong>Régimen Fiscal:</strong> {esc(a['tax_info'])}</p>
+          <p style="color: #e2e8f0; font-size: 0.95rem;"><strong>Régimen Fiscal:</strong> Confirma los impuestos, categorías y porcentajes vigentes con la autoridad tributaria de tu país. Esta simulación no determina tu régimen fiscal.</p>
         </div>
 
         <div style="text-align: center; margin: 40px 0;">
@@ -588,6 +726,45 @@ def build_legal_pages():
         ("sobre-tarifa-pro", "Sobre Tarifa Pro y Metodología", "Estándares editoriales, origen de los datos y criterios de validación de tarifas freelance."),
         ("contacto", "Contacto y Soporte", "Canal directo para consultas, sugerencias y correcciones de tarifas.")
     ]
+    legal_bodies = {
+        "privacidad": """
+          <h2>Datos introducidos en las herramientas</h2>
+          <p>Las calculadoras de esta web permiten editar cifras y ejemplos en tu navegador. Antes de compartir una cotización o una captura, comprueba que no contenga información privada de clientes.</p>
+          <h2>Servicios externos</h2>
+          <p>El sitio incluye scripts de Google Analytics, Google AdSense y CookieYes. Estos proveedores pueden tratar información según sus configuraciones y sus propias políticas. Consulta el panel de consentimiento cuando esté disponible y la documentación de cada proveedor para conocer las opciones de control.</p>
+          <h2>Consultas y correcciones</h2>
+          <p>Si detectas un dato desactualizado, utiliza el <a href="https://github.com/SSJ-ARIEL/TARIFAPRO/issues">repositorio público de incidencias</a>. No publiques allí datos personales ni documentos confidenciales.</p>
+        """,
+        "terminos": """
+          <h2>Finalidad de las herramientas</h2>
+          <p>Tarifa Pro ofrece cálculos y plantillas como material educativo. No garantiza ingresos, condiciones comerciales, salarios ni la aceptación de un presupuesto por clientes o autoridades.</p>
+          <h2>Responsabilidad de las decisiones</h2>
+          <p>Comprueba los costos, horas, monedas, requisitos fiscales y cláusulas contractuales antes de usar los resultados. Los porcentajes que aparecen al abrir la herramienta son valores de demostración, no recomendaciones universales.</p>
+          <h2>Limitaciones</h2>
+          <p>Los rangos precargados en fichas de países y profesiones no equivalen a una encuesta de mercado verificada. Para casos concretos, acude a fuentes oficiales y profesionales cualificados.</p>
+        """,
+        "cookies": """
+          <h2>Qué servicios se cargan</h2>
+          <p>La web utiliza recursos de Google Analytics para medición de visitas, Google AdSense para funciones publicitarias y CookieYes para presentar opciones de consentimiento. La disponibilidad efectiva de anuncios depende de la aprobación de Google.</p>
+          <h2>Control y preferencias</h2>
+          <p>Revisa las opciones del aviso de consentimiento y la configuración de cookies de tu navegador. Google y CookieYes publican información adicional sobre los datos que pueden tratar; no interpretes la presencia de estos scripts como una garantía de certificación regulatoria.</p>
+        """,
+        "sobre-tarifa-pro": """
+          <h2>Qué puedes hacer aquí</h2>
+          <p>Calcula una tarifa orientativa desde tus propios gastos y horas facturables y prepara una propuesta que puedes editar e imprimir. No necesitamos inventar estadísticas para mostrar cómo funciona una fórmula.</p>
+          <h2>Cómo se calcula</h2>
+          <p>La calculadora convierte tus gastos mensuales en un objetivo anual, suma el margen de ahorro elegido, ajusta por el porcentaje de impuestos que introduces y divide entre las horas facturables estimadas para el año. El precio final sigue dependiendo de tu proyecto y de tu mercado.</p>
+          <h2>Cómo interpretamos los datos de ejemplo</h2>
+          <p>Las fichas de profesión y país proceden de una matriz de profesiones y multiplicadores de divisas fijos. No se actualizan con cotizaciones en directo ni se han validado aquí mediante un estudio salarial independiente. Permanecen fuera del índice hasta disponer de revisión y fuentes verificables.</p>
+          <h2>Correcciones</h2>
+          <p>Las observaciones documentadas pueden comunicarse en <a href="https://github.com/SSJ-ARIEL/TARIFAPRO/issues">GitHub Issues</a>. Evita compartir datos personales en reportes públicos.</p>
+        """,
+        "contacto": """
+          <h2>Envíanos una observación sobre la web</h2>
+          <p>Puedes comunicar errores de funcionamiento, enlaces rotos, propuestas de mejora o datos que necesiten verificación mediante el <a href="https://github.com/SSJ-ARIEL/TARIFAPRO/issues">formulario de incidencias de GitHub</a>.</p>
+          <p>Selecciona «New issue», describe la página afectada y los pasos para reproducir el problema. Ese espacio es público: no incluyas correo privado de clientes, documentos, identificadores fiscales ni contraseñas.</p>
+        """,
+    }
     for slug, title, desc in legals:
         folder = DOCS / slug
         folder.mkdir(parents=True, exist_ok=True)
@@ -599,12 +776,10 @@ def build_legal_pages():
   <main class="container" style="padding-top: 40px; margin-bottom: 60px;">
     <div class="panel-card" style="max-width: 840px; margin: 0 auto; background: var(--bg-card); padding: 36px; border-radius: 16px; border: 1px solid var(--border);">
       <h1 style="font-size: 2.2rem; margin-bottom: 16px; color: #fff;">{title}</h1>
-      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">Última actualización: Agosto 2026</p>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">Revisión editorial: octubre de 2026</p>
       
       <div style="color: var(--text-muted); line-height: 1.8; display: flex; flex-direction: column; gap: 16px;">
-        <p>En <strong>Tarifa Pro</strong> nos comprometemos con la transparencia, la seguridad de los usuarios y el cumplimiento de las directrices de Google AdSense y normativas internacionales de protección de datos (GDPR / TCF v2.2).</p>
-        <p>{desc}</p>
-        <p>Para cualquier inquietud o solicitud de soporte, puedes escribirnos a través de nuestro formulario oficial de <a href="{route_url('contacto', depth)}" style="color: var(--primary);">Contacto</a>.</p>
+        {legal_bodies[slug]}
       </div>
     </div>
   </main>
@@ -614,18 +789,48 @@ def build_legal_pages():
         (folder / "index.html").write_text(html_content, encoding="utf-8")
 
 def build_search_index():
-    search_data = []
-    for a in ARTICLES:
+    # Search only the pages reviewed for public indexing.
+    # Preserve previous templated URLs for bookmarks, not for discovery.
+    search_data = [
+        {
+            "title": "Calculadora de tarifa freelance por hora",
+            "url": "calculadora-freelance/",
+            "profession": "Calculadora de tarifas",
+            "country": "",
+            "category": "herramientas",
+            "currency": "",
+        },
+        {
+            "title": "Generador de presupuestos y cotizaciones",
+            "url": "generador-presupuestos/",
+            "profession": "Presupuestos",
+            "country": "",
+            "category": "herramientas",
+            "currency": "",
+        },
+    ]
+    for guide in GUIDES:
         search_data.append({
-            "title": a["title"],
-            "url": f"{a['category']}/{a['slug']}/",
-            "category": a["category"],
-            "country": a["country"],
-            "profession": a["profession"],
-            "currency": a["currency"]
+            "title": guide["title"],
+            "url": "guias/" + guide["slug"] + "/",
+            "profession": "Guía práctica",
+            "country": "",
+            "category": "guias",
+            "currency": "",
         })
-    
-    (DOCS / "assets" / "js" / "search-index.json").write_text(json.dumps(search_data, ensure_ascii=False), encoding="utf-8")
+    for category in CATEGORIES:
+        search_data.append({
+            "title": category["name"],
+            "url": category["slug"] + "/",
+            "profession": category["description"],
+            "country": "",
+            "category": "categorias",
+            "currency": "",
+        })
+    (DOCS / "assets" / "js" / "search-index.json").write_text(
+        json.dumps(search_data, ensure_ascii=False), encoding="utf-8"
+    )
+
 
 def build_sitemap_and_robots():
     urls = [
@@ -640,8 +845,10 @@ def build_sitemap_and_robots():
     ]
     for c in CATEGORIES:
         urls.append(f"{SITE_URL}/{c['slug']}/")
-    for a in ARTICLES:
-        urls.append(f"{SITE_URL}/{a['category']}/{a['slug']}/")
+    for guide in GUIDES:
+        urls.append(f"{SITE_URL}/guias/{guide['slug']}/")
+    # Pages generated by a country/profession template remain accessible for bookmarks,
+    # but are excluded from search indexing until independently reviewed and sourced.
     
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for u in urls:
@@ -665,6 +872,7 @@ def main():
     build_calculator_page()
     build_invoice_page()
     build_category_pages()
+    build_editorial_guides()
     build_article_pages()
     build_legal_pages()
     build_search_index()
