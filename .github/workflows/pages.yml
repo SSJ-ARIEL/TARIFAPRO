@@ -4,6 +4,12 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+    inputs:
+      cancel_deployment_ids:
+        description: "SHA de nuestros despliegues bloqueados, separados por comas"
+        required: false
+        default: ""
+        type: string
 
 permissions:
   contents: read
@@ -48,6 +54,38 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Cancel selected stalled Pages deployments
+        if: github.event_name == 'workflow_dispatch' && inputs.cancel_deployment_ids != ''
+        uses: actions/github-script@v8
+        env:
+          CANCEL_DEPLOYMENT_IDS: ${{ inputs.cancel_deployment_ids }}
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            const allowed = new Set([
+              '8665eca87cb22839e1a160f5afc856be2e9fdebb',
+              '5581efd783c6f1bbe3afa61da4f7b095bec48f68'
+            ]);
+            const ids = [...new Set(process.env.CANCEL_DEPLOYMENT_IDS.split(',').map(id => id.trim()).filter(Boolean))];
+            if (!ids.length || ids.some(id => !/^[a-f0-9]{40}$/.test(id) || !allowed.has(id))) {
+              throw new Error('Only the two recorded, timed-out deployments may be cancelled.');
+            }
+            for (const id of ids) {
+              try {
+                await github.request('POST /repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel', {
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pages_deployment_id: id
+                });
+                core.info(`Cancelled stalled Pages deployment ${id}.`);
+              } catch (error) {
+                if (error.status === 404 || error.status === 409) {
+                  core.warning(`Deployment ${id} cannot be cancelled (HTTP ${error.status}); it may already be terminal or absent.`);
+                } else {
+                  throw error;
+                }
+              }
+            }
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
