@@ -24,6 +24,12 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Verify calculator and proposal arithmetic
+        run: node scripts/test_tools.js
       - name: Generate static site
         run: python scripts/build.py
       - name: Verify output quality before deployment

@@ -7,7 +7,7 @@
   "github_owner": "SSJ-ARIEL",
   "site_url": "https://ssj-ariel.github.io/TARIFAPRO",
   "base_path": "/TARIFAPRO",
-  "author": "Equipo Editorial Tarifa Pro",
+  "author": "Tarifa Pro",
   "publisher": {
     "name": "Tarifa Pro",
     "logo": "assets/icons/favicon.svg"
@@ -20,11 +20,13 @@
     "google_site_verification": "fiIBsjUQK2ml2hf1bKK4YpKukaQ7cPRnddfQ1tTW11g"
   },
   "analytics": {
-    "ga4_measurement_id": "G-RM2QTBG2B4"
+    "ga4_measurement_id": "G-RM2QTBG2B4",
+    "enabled": false
   },
   "adsense": {
     "client_id": "ca-pub-7507181626477156",
-    "publisher_id_for_ads_txt": "pub-7507181626477156"
+    "publisher_id_for_ads_txt": "pub-7507181626477156",
+    "enabled": false
   },
   "colors": {
     "background": "#030712",
@@ -32,5 +34,10 @@
     "emerald": "#10b981",
     "cyan": "#00d2ff",
     "indigo": "#6366f1"
+  },
+  "contact_email": "sabiasque496@gmail.com",
+  "consent": {
+    "configured": false,
+    "cookieyes_client_id": "63029c5cae366ef7f38f04401f9d9185"
   }
 }

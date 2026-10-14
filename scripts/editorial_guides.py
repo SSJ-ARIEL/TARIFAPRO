@@ -7,6 +7,7 @@ Cada ejemplo usa una tarea distinta y hace visible la fórmula o alcance.
 GUIDES = [
     {
         "slug": "calcular-tarifa-hora-freelance",
+        "category": None,
         "title": "Cómo calcular tu tarifa freelance con horas facturables reales",
         "description": "Ejemplo paso a paso para estimar una tarifa por hora con gastos, vacaciones, ahorro e impuestos hipotéticos, sin confundir horas trabajadas y horas facturables.",
         "summary": "Calcula un punto de partida con un caso de números transparentes y comprueba qué cambia cuando tienes menos horas que vender.",
@@ -43,6 +44,7 @@ GUIDES = [
     },
     {
         "slug": "presupuestar-pagina-web-alcance",
+        "category": "desarrollo-web",
         "title": "Presupuestar una página web: horas, revisiones y cambios de alcance",
         "description": "Caso hipotético de presupuesto de una web con fases verificables, 60 horas de trabajo, licencias, reserva de imprevistos y condiciones para cambios de alcance.",
         "summary": "Desglosa una web en fases y aprende a separar el trabajo contratado de los cambios adicionales.",
@@ -86,6 +88,7 @@ GUIDES = [
     },
     {
         "slug": "cotizar-edicion-video-entregables",
+        "category": "video-animacion",
         "title": "Cómo cotizar una edición de video sin olvidar subtítulos ni revisiones",
         "description": "Desglose de un proyecto hipotético de edición de video con 19 horas de trabajo, subtítulos, mezcla, exportación, licencias, revisiones y presupuesto transparente.",
         "summary": "Separa edición, audio, subtítulos, formatos y derechos para que el precio responda al trabajo real.",

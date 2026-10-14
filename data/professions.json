@@ -3,9 +3,6 @@
     "slug": "desarrollador-web-fullstack",
     "title": "Desarrollador Web Full Stack",
     "category": "desarrollo-web",
-    "base_usd_hour_junior": 15,
-    "base_usd_hour_mid": 30,
-    "base_usd_hour_senior": 55,
     "skills": [
       "React",
       "Node.js",
@@ -25,9 +22,6 @@
     "slug": "disenador-ui-ux",
     "title": "Diseñador UI/UX & Producto Digital",
     "category": "diseno-multimedia",
-    "base_usd_hour_junior": 12,
-    "base_usd_hour_mid": 25,
-    "base_usd_hour_senior": 48,
     "skills": [
       "Figma",
       "Design Systems",
@@ -46,9 +40,6 @@
     "slug": "editor-video-youtube-tiktok",
     "title": "Editor de Video para Creadores & Marcas",
     "category": "video-animacion",
-    "base_usd_hour_junior": 10,
-    "base_usd_hour_mid": 22,
-    "base_usd_hour_senior": 40,
     "skills": [
       "Premiere Pro",
       "After Effects",
@@ -67,9 +58,6 @@
     "slug": "copywriter-redactor-seo",
     "title": "Copywriter & Redactor de Contenido SEO",
     "category": "redaccion-copywriting",
-    "base_usd_hour_junior": 10,
-    "base_usd_hour_mid": 20,
-    "base_usd_hour_senior": 38,
     "skills": [
       "Copywriting de Respuesta Directa",
       "SEO On-Page",
@@ -88,9 +76,6 @@
     "slug": "community-manager-media-buyer",
     "title": "Media Buyer & Trafficker Digital (Meta/Google Ads)",
     "category": "marketing-digital",
-    "base_usd_hour_junior": 12,
-    "base_usd_hour_mid": 25,
-    "base_usd_hour_senior": 50,
     "skills": [
       "Meta Ads Manager",
       "Google Ads",
@@ -109,9 +94,6 @@
     "slug": "especialista-ia-automatizaciones",
     "title": "Especialista en Automatizaciones e IA",
     "category": "ia-automatizacion",
-    "base_usd_hour_junior": 18,
-    "base_usd_hour_mid": 35,
-    "base_usd_hour_senior": 65,
     "skills": [
       "Make.com",
       "Zapier",
@@ -131,9 +113,6 @@
     "slug": "desarrollador-mobile-flutter-react-native",
     "title": "Desarrollador de Aplicaciones Móviles",
     "category": "desarrollo-web",
-    "base_usd_hour_junior": 16,
-    "base_usd_hour_mid": 32,
-    "base_usd_hour_senior": 58,
     "skills": [
       "Flutter",
       "React Native",
@@ -153,9 +132,6 @@
     "slug": "consultor-seo-estrategia-organica",
     "title": "Consultor SEO & Posicionamiento en Buscadores",
     "category": "marketing-digital",
-    "base_usd_hour_junior": 14,
-    "base_usd_hour_mid": 28,
-    "base_usd_hour_senior": 55,
     "skills": [
       "SEO Técnico",
       "Auditorías con Screaming Frog",
@@ -174,9 +150,6 @@
     "slug": "animador-motion-graphics-3d",
     "title": "Animador 2D / 3D & Motion Designer",
     "category": "video-animacion",
-    "base_usd_hour_junior": 14,
-    "base_usd_hour_mid": 28,
-    "base_usd_hour_senior": 52,
     "skills": [
       "After Effects",
       "Blender",
@@ -195,9 +168,6 @@
     "slug": "traductor-localizador-tecnico",
     "title": "Traductor & Especialista en Localización",
     "category": "redaccion-copywriting",
-    "base_usd_hour_junior": 10,
-    "base_usd_hour_mid": 18,
-    "base_usd_hour_senior": 35,
     "skills": [
       "Traducción Inglés-Español",
       "Localización de Software",
@@ -215,9 +185,6 @@
     "slug": "desarrollador-backend-python-django",
     "title": "Desarrollador Backend Python & Django",
     "category": "desarrollo-web",
-    "base_usd_hour_junior": 16,
-    "base_usd_hour_mid": 32,
-    "base_usd_hour_senior": 60,
     "skills": [
       "Python",
       "Django",
@@ -237,9 +204,6 @@
     "slug": "especialista-shopify-ecommerce",
     "title": "Especialista en Tiendas Shopify & E-commerce",
     "category": "desarrollo-web",
-    "base_usd_hour_junior": 14,
-    "base_usd_hour_mid": 28,
-    "base_usd_hour_senior": 50,
     "skills": [
       "Liquid",
       "Shopify Plus",
@@ -258,9 +222,6 @@
     "slug": "consultor-powerbi-data-analytics",
     "title": "Consultor de Power BI & Data Analytics",
     "category": "consultoria-negocios",
-    "base_usd_hour_junior": 18,
-    "base_usd_hour_mid": 35,
-    "base_usd_hour_senior": 65,
     "skills": [
       "Power BI",
       "DAX",
@@ -280,9 +241,6 @@
     "slug": "ilustrador-concept-artist-digital",
     "title": "Ilustrador Digital & Concept Artist",
     "category": "diseno-multimedia",
-    "base_usd_hour_junior": 12,
-    "base_usd_hour_mid": 24,
-    "base_usd_hour_senior": 45,
     "skills": [
       "Photoshop",
       "Procreate",
@@ -301,9 +259,6 @@
     "slug": "disenador-3d-blender-unreal",
     "title": "Diseñador 3D para Videojuegos & Renders",
     "category": "diseno-multimedia",
-    "base_usd_hour_junior": 15,
-    "base_usd_hour_mid": 30,
-    "base_usd_hour_senior": 55,
     "skills": [
       "Blender",
       "Unreal Engine 5",
@@ -322,9 +277,6 @@
     "slug": "editor-podcast-sound-designer",
     "title": "Editor de Podcast & Diseñador de Sonido",
     "category": "video-animacion",
-    "base_usd_hour_junior": 10,
-    "base_usd_hour_mid": 20,
-    "base_usd_hour_senior": 38,
     "skills": [
       "Audition",
       "Reaper",
@@ -343,9 +295,6 @@
     "slug": "especialista-growth-hacking-funnels",
     "title": "Especialista en Growth Hacking & Embudos",
     "category": "marketing-digital",
-    "base_usd_hour_junior": 16,
-    "base_usd_hour_mid": 32,
-    "base_usd_hour_senior": 60,
     "skills": [
       "Embudos de Venta",
       "A/B Testing",
@@ -364,9 +313,6 @@
     "slug": "especialista-ciberseguridad-pentesting",
     "title": "Consultor de Ciberseguridad & Pentesting",
     "category": "consultoria-negocios",
-    "base_usd_hour_junior": 22,
-    "base_usd_hour_mid": 45,
-    "base_usd_hour_senior": 85,
     "skills": [
       "Pentesting Web",
       "OWASP Top 10",
@@ -385,9 +331,6 @@
     "slug": "community-manager-tiktok-instagram",
     "title": "Community Manager & Creador de Contenido",
     "category": "marketing-digital",
-    "base_usd_hour_junior": 10,
-    "base_usd_hour_mid": 18,
-    "base_usd_hour_senior": 35,
     "skills": [
       "Gestión de Redes",
       "CapCut",
@@ -406,9 +349,6 @@
     "slug": "copywriter-email-marketing-klaviyo",
     "title": "Copywriter Especialista en Email Marketing",
     "category": "redaccion-copywriting",
-    "base_usd_hour_junior": 12,
-    "base_usd_hour_mid": 25,
-    "base_usd_hour_senior": 48,
     "skills": [
       "Klaviyo",
       "Mailchimp",
@@ -427,9 +367,6 @@
     "slug": "consultor-notion-sistemas-productividad",
     "title": "Consultor de Notion & Sistemas de Trabajo",
     "category": "ia-automatizacion",
-    "base_usd_hour_junior": 14,
-    "base_usd_hour_mid": 26,
-    "base_usd_hour_senior": 50,
     "skills": [
       "Notion Avanzado",
       "Fórmulas 2.0",
@@ -448,9 +385,6 @@
     "slug": "especialista-bubble-desarrollo-nocode",
     "title": "Desarrollador No-Code en Bubble.io",
     "category": "ia-automatizacion",
-    "base_usd_hour_junior": 15,
-    "base_usd_hour_mid": 30,
-    "base_usd_hour_senior": 55,
     "skills": [
       "Bubble.io",
       "APIs & Webhooks",
@@ -469,9 +403,6 @@
     "slug": "desarrollador-smart-contracts-web3",
     "title": "Desarrollador Web3 & Smart Contracts",
     "category": "desarrollo-web",
-    "base_usd_hour_junior": 25,
-    "base_usd_hour_mid": 50,
-    "base_usd_hour_senior": 90,
     "skills": [
       "Solidity",
       "Ethereum",
@@ -490,9 +421,6 @@
     "slug": "locutor-voice-over-comercial",
     "title": "Locutor Profesional & Voice Over",
     "category": "video-animacion",
-    "base_usd_hour_junior": 12,
-    "base_usd_hour_mid": 24,
-    "base_usd_hour_senior": 45,
     "skills": [
       "Locución Neutra",
       "Doblaje",
@@ -511,9 +439,6 @@
     "slug": "consultor-finanzas-contabilidad-freelance",
     "title": "Asesor Financiero para Emprendedores Digitales",
     "category": "consultoria-negocios",
-    "base_usd_hour_junior": 16,
-    "base_usd_hour_mid": 32,
-    "base_usd_hour_senior": 60,
     "skills": [
       "Planificación Fiscal",
       "Presupuestos",

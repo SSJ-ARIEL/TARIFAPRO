@@ -4,48 +4,48 @@
     "name": "Desarrollo & Programación",
     "nav_label": "Desarrollo",
     "icon": "💻",
-    "description": "Tarifas por hora, precios de aplicaciones, sitios web, APIs y proyectos de software a medida."
+    "description": "Prepara el alcance de una web: páginas, integraciones, pruebas, revisiones y mantenimiento."
   },
   {
     "slug": "diseno-multimedia",
     "name": "Diseño UI/UX & Gráfico",
     "nav_label": "Diseño",
     "icon": "🎨",
-    "description": "Cotización de marcas, interfaces web, prototipos en Figma, ilustración digital y branding."
+    "description": "Define piezas visuales, versiones, licencias, archivos editables y criterios de entrega."
   },
   {
     "slug": "marketing-digital",
     "name": "Marketing & Publicidad Digital",
     "nav_label": "Marketing",
     "icon": "📈",
-    "description": "Precios de gestión de campañas de Meta/Google Ads, SEO, Community Management y lanzamientos."
+    "description": "Separa la gestión de campañas de la inversión publicitaria y acuerda métricas e informes."
   },
   {
     "slug": "video-animacion",
     "name": "Video & Motion Graphics",
     "nav_label": "Video & Edición",
     "icon": "🎬",
-    "description": "Costes de edición para YouTube/TikTok, efectos visuales, animación 3D y postproducción de audio."
+    "description": "Desglosa material bruto, montaje, audio, subtítulos, formatos y rondas de revisión."
   },
   {
     "slug": "redaccion-copywriting",
     "name": "Redacción & Copywriting",
     "nav_label": "Redacción",
     "icon": "✍️",
-    "description": "Tarifas por palabra, artículos para blog, páginas de venta, emails comerciales y traducción técnica."
+    "description": "Presupuesta investigación, entrevistas, redacción, fuentes, edición y correcciones."
   },
   {
     "slug": "ia-automatizacion",
     "name": "Inteligencia Artificial & No-Code",
     "nav_label": "IA & No-Code",
     "icon": "🤖",
-    "description": "Cotización de chatbots con IA, automatizaciones en Make/Zapier y desarrollo con Bubble/Webflow."
+    "description": "Cotiza diagnóstico, integración, pruebas de fallos, consumo de API y soporte de una automatización."
   },
   {
     "slug": "consultoria-negocios",
     "name": "Consultoría & Estrategia",
     "nav_label": "Consultoría",
     "icon": "💼",
-    "description": "Tarifas de asesoría empresarial, finanzas, analítica de datos y gestión de proyectos."
+    "description": "Acuerda una pregunta de negocio, evidencia, reuniones y entregables para un diagnóstico concreto."
   }
 ]

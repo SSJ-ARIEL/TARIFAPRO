@@ -5,9 +5,7 @@
     "name": "México",
     "currency": "MXN",
     "symbol": "$",
-    "usd_rate": 18.5,
-    "flag": "🇲🇽",
-    "tax_info": "Régimen RESICO o Actividad Empresarial (ISR 1%-2.5% o hasta 35%, IVA 16%)"
+    "flag": "🇲🇽"
   },
   {
     "code": "ES",
@@ -15,9 +13,7 @@
     "name": "España",
     "currency": "EUR",
     "symbol": "€",
-    "usd_rate": 0.92,
-    "flag": "🇪🇸",
-    "tax_info": "Cuota de Autónomos RETA + IRPF trimestral (retención 15%) + IVA 21%"
+    "flag": "🇪🇸"
   },
   {
     "code": "CO",
@@ -25,9 +21,7 @@
     "name": "Colombia",
     "currency": "COP",
     "symbol": "$",
-    "usd_rate": 4100.0,
-    "flag": "🇨🇴",
-    "tax_info": "Régimen Simple de Tributación (RST) o Ordinario + Seguridad Social (salud y pensión)"
+    "flag": "🇨🇴"
   },
   {
     "code": "AR",
@@ -35,9 +29,7 @@
     "name": "Argentina",
     "currency": "ARS",
     "symbol": "$",
-    "usd_rate": 1150.0,
-    "flag": "🇦🇷",
-    "tax_info": "Régimen de Monotributo (categorías A a K) o Responsable Inscripto + Facturación E para exportación"
+    "flag": "🇦🇷"
   },
   {
     "code": "CL",
@@ -45,9 +37,7 @@
     "name": "Chile",
     "currency": "CLP",
     "symbol": "$",
-    "usd_rate": 940.0,
-    "flag": "🇨🇱",
-    "tax_info": "Boletas de Honorarios con retención del 13.75% + Pago provisional mensual (PPM)"
+    "flag": "🇨🇱"
   },
   {
     "code": "PE",
@@ -55,9 +45,7 @@
     "name": "Perú",
     "currency": "PEN",
     "symbol": "S/",
-    "usd_rate": 3.75,
-    "flag": "🇵🇪",
-    "tax_info": "Régimen RUC con Recibos por Honorarios (4ta categoría con 8% de retención)"
+    "flag": "🇵🇪"
   },
   {
     "code": "US",
@@ -65,9 +53,7 @@
     "name": "Estados Unidos / Remoto Global",
     "currency": "USD",
     "symbol": "$",
-    "usd_rate": 1.0,
-    "flag": "🇺🇸",
-    "tax_info": "Contratistas independientes W-8BEN (extranjeros) o 1099-NEC con cobro en dólares vía Wise/Stripe"
+    "flag": "🇺🇸"
   },
   {
     "code": "EC",
@@ -75,9 +61,7 @@
     "name": "Ecuador",
     "currency": "USD",
     "symbol": "$",
-    "usd_rate": 1.0,
-    "flag": "🇪🇨",
-    "tax_info": "Régimen RIMPE (Negocios Populares o Emprendedores) con economía dolarizada"
+    "flag": "🇪🇨"
   },
   {
     "code": "CR",
@@ -85,9 +69,7 @@
     "name": "Costa Rica",
     "currency": "CRC",
     "symbol": "₡",
-    "usd_rate": 520.0,
-    "flag": "🇨🇷",
-    "tax_info": "Impuesto sobre la Renta para profesionales independientes + IVA 13%"
+    "flag": "🇨🇷"
   },
   {
     "code": "UY",
@@ -95,9 +77,7 @@
     "name": "Uruguay",
     "currency": "UYU",
     "symbol": "$",
-    "usd_rate": 40.0,
-    "flag": "🇺🇾",
-    "tax_info": "Régimen de Unipersonales con exoneraciones fiscales para exportación de software y servicios IT"
+    "flag": "🇺🇾"
   },
   {
     "code": "PA",
@@ -105,9 +85,7 @@
     "name": "Panamá",
     "currency": "USD",
     "symbol": "$",
-    "usd_rate": 1.0,
-    "flag": "🇵🇦",
-    "tax_info": "Economía dolarizada, régimen fiscal territorial con exoneración para ingresos del exterior"
+    "flag": "🇵🇦"
   },
   {
     "code": "DO",
@@ -115,9 +93,7 @@
     "name": "República Dominicana",
     "currency": "DOP",
     "symbol": "RD$",
-    "usd_rate": 59.0,
-    "flag": "🇩🇴",
-    "tax_info": "Régimen Simplificado de Tributación (RST) de la DGII + Retención de ITBIS"
+    "flag": "🇩🇴"
   },
   {
     "code": "GT",
@@ -125,9 +101,7 @@
     "name": "Guatemala",
     "currency": "GTQ",
     "symbol": "Q",
-    "usd_rate": 7.8,
-    "flag": "🇬🇹",
-    "tax_info": "Régimen de Pequeño Contribuyente (5% sobre ingresos brutos) ante la SAT"
+    "flag": "🇬🇹"
   },
   {
     "code": "BO",
@@ -135,9 +109,7 @@
     "name": "Bolivia",
     "currency": "BOB",
     "symbol": "Bs",
-    "usd_rate": 6.9,
-    "flag": "🇧🇴",
-    "tax_info": "Régimen Tributario General (RC-IVA, IT e IUE) con cobros en moneda local o divisas"
+    "flag": "🇧🇴"
   },
   {
     "code": "PY",
@@ -145,8 +117,6 @@
     "name": "Paraguay",
     "currency": "PYG",
     "symbol": "₲",
-    "usd_rate": 7500.0,
-    "flag": "🇵🇾",
-    "tax_info": "Impuesto a la Renta Personal (IRP - Servicios Personales) + IVA Servicios 10%"
+    "flag": "🇵🇾"
   }
 ]

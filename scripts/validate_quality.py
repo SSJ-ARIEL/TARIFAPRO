@@ -1,123 +1,144 @@
-"""Checks for the intentionally indexable Tarifa Pro content.
+"""Validate the consolidated publishing surface and withdrawn historical URLs.
 
-This validation does not certify AdSense approval. It detects accidental reindexing
-of templated country/profession combinations and deployment mistakes.
+These checks detect regressions; they do not certify AdSense approval.
 """
 from __future__ import annotations
 
 import json
 import re
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 from xml.etree import ElementTree
+
+from build import SITE, SITE_URL, CATEGORIES, GUIDES, ARTICLES
+from category_workflows import CATEGORY_WORKFLOWS
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
-BASE = "https://ssj-ariel.github.io/TARIFAPRO/"
+BASE = SITE_URL + "/"
 INDEXABLE = {
-    "",
-    "calculadora-freelance/",
-    "generador-presupuestos/",
-    "sobre-tarifa-pro/",
-    "contacto/",
-    "privacidad/",
-    "terminos/",
-    "cookies/",
-    "desarrollo-web/",
-    "diseno-multimedia/",
-    "marketing-digital/",
-    "video-animacion/",
-    "redaccion-copywriting/",
-    "ia-automatizacion/",
-    "consultoria-negocios/",
-    "guias/calcular-tarifa-hora-freelance/",
-    "guias/presupuestar-pagina-web-alcance/",
-    "guias/cotizar-edicion-video-entregables/",
+    "", "calculadora-freelance/", "generador-presupuestos/",
+    "sobre-tarifa-pro/", "contacto/", "privacidad/", "terminos/", "cookies/",
+    *(category["slug"] + "/" for category in CATEGORIES),
+    *("guias/" + guide["slug"] + "/" for guide in GUIDES),
 }
-PUBLISHER = "pub-7507181626477156"
+LEGACY = {article["category"] + "/" + article["slug"] + "/" for article in ARTICLES}
+
+
+class References(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.urls = []
+        self.script_sources = []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        for key in ("href", "src"):
+            if attributes.get(key):
+                self.urls.append(attributes[key])
+        if tag == "script" and attributes.get("src"):
+            self.script_sources.append(attributes["src"])
 
 
 def main() -> None:
+    if len(GUIDES) != 9 or len(LEGACY) != 1500:
+        raise AssertionError("The reviewed guide inventory or historical URL inventory changed unexpectedly")
     sitemap = ElementTree.parse(DOCS / "sitemap.xml").getroot()
     ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
-    actual = {entry.findtext(f"{ns}loc") for entry in sitemap.findall(f"{ns}url")}
+    actual = [entry.findtext(f"{ns}loc") for entry in sitemap.findall(f"{ns}url")]
     expected = {BASE + route for route in INDEXABLE}
-    if actual != expected:
-        raise AssertionError(f"Sitemap difference: missing={expected-actual}, unexpected={actual-expected}")
-
-    if PUBLISHER not in (DOCS / "ads.txt").read_text(encoding="utf-8"):
+    if set(actual) != expected or len(actual) != len(expected):
+        raise AssertionError(f"Sitemap difference: missing={expected-set(actual)}, unexpected={set(actual)-expected}")
+    if SITE["adsense"]["publisher_id_for_ads_txt"] not in (DOCS / "ads.txt").read_text(encoding="utf-8"):
         raise AssertionError("ads.txt publisher mismatch")
     if BASE + "sitemap.xml" not in (DOCS / "robots.txt").read_text(encoding="utf-8"):
         raise AssertionError("robots.txt sitemap mismatch")
 
     html_files = list(DOCS.rglob("index.html"))
-    indexable_count = 0
-    noindex_count = 0
+    seen = set()
+    references_checked = 0
     for path in html_files:
-        html = path.read_text(encoding="utf-8")
+        text = path.read_text(encoding="utf-8")
         relative = path.parent.relative_to(DOCS).as_posix()
         route = "" if relative == "." else relative + "/"
-        robots = re.search(r'<meta name="robots" content="([^"]+)"', html)
+        seen.add(route)
+        robots = re.search(r'<meta name="robots" content="([^"]+)"', text)
         if not robots:
             raise AssertionError(f"{path}: missing robots meta")
-        has_ad = "pagead2.googlesyndication.com/pagead/js/adsbygoogle.js" in html
-        if route in INDEXABLE:
-            indexable_count += 1
-            if "noindex" in robots.group(1):
-                raise AssertionError(f"{path}: expected indexable")
-            if not has_ad:
-                raise AssertionError(f"{path}: AdSense ownership script missing")
-        else:
-            noindex_count += 1
-            if "noindex" not in robots.group(1):
-                raise AssertionError(f"{path}: generated guide must be noindex")
-            if has_ad:
-                raise AssertionError(f"{path}: generated guide must not load ads")
-            if "esta ficha es una simulación" not in html.lower():
-                raise AssertionError(f"{path}: generated guide missing disclosure")
+        if ("noindex" not in robots.group(1)) != (route in INDEXABLE):
+            raise AssertionError(f"{path}: incorrect indexation state")
+        if f'<link rel="canonical" href="{BASE + route}">' not in text:
+            raise AssertionError(f"{path}: incorrect canonical")
+        if text.count("<h1") != 1:
+            raise AssertionError(f"{path}: expected one main heading")
+        if f'<meta name="google-adsense-account" content="{SITE["adsense"]["client_id"]}">' not in text:
+            raise AssertionError(f"{path}: lost account ownership metadata")
+        if SITE["verification"]["google_site_verification"] not in text:
+            raise AssertionError(f"{path}: lost site verification")
 
-    if indexable_count != len(INDEXABLE) or noindex_count != 1500:
-        raise AssertionError(f"Unexpected pages: {indexable_count} indexable, {noindex_count} noindex")
-    home = (DOCS / "index.html").read_text(encoding="utf-8")
-    if "Fórmulas Validadas con Contadores" in home or "Estándares Fiscales 2026" in home:
-        raise AssertionError("Unverified marketing claims reintroduced")
-    about = (DOCS / "sobre-tarifa-pro" / "index.html").read_text(encoding="utf-8")
-    if "matriz de profesiones" not in about:
-        raise AssertionError("Methodology page does not disclose data source")
-    search_index = json.loads((DOCS / "assets" / "js" / "search-index.json").read_text(encoding="utf-8"))
-    if len(search_index) != 12:
-        raise AssertionError(f"Search should only expose 12 reviewed pages, got {len(search_index)}")
-    indexed_routes = {entry["url"] for entry in search_index}
-    if not indexed_routes.issubset(INDEXABLE):
-        raise AssertionError("Search promotes routes not approved for indexing")
-    for category in [
-        "desarrollo-web", "diseno-multimedia", "marketing-digital",
-        "video-animacion", "redaccion-copywriting", "ia-automatizacion",
-        "consultoria-negocios",
-    ]:
-        text = (DOCS / category / "index.html").read_text(encoding="utf-8")
-        if "Preguntas que debes resolver antes de cotizar" not in text:
-            raise AssertionError(f"{category}: missing specific budgeting guidance")
+        parser = References()
+        parser.feed(text)
+        # Review mode intentionally loads no remote ad, analytics or CMP resources.
+        if any(urlsplit(src).scheme or src.startswith("//") for src in parser.script_sources):
+            raise AssertionError(f"{path}: third-party scripts must stay paused during review")
+        for url in parser.urls:
+            parts = urlsplit(url)
+            if parts.scheme or parts.netloc or not parts.path:
+                continue
+            target = (path.parent / unquote(parts.path)).resolve()
+            if not target.is_relative_to(DOCS.resolve()):
+                raise AssertionError(f"{path}: reference escapes site root: {url}")
+            if target.is_dir():
+                target = target / "index.html"
+            if not target.is_file():
+                raise AssertionError(f"{path}: broken local reference: {url}")
+            references_checked += 1
+        if route in LEGACY:
+            if "Ficha antigua retirada" not in text or "Hemos retirado esta ficha" not in text:
+                raise AssertionError(f"{path}: missing withdrawal explanation")
+            for obsolete in ("hourly_junior", "Nivel Junior", "Nivel Senior", "Régimen RESICO", "Tabulador", '"@type": "Article"'):
+                if obsolete in text:
+                    raise AssertionError(f"{path}: unsourced matrix content returned: {obsolete}")
+        elif route not in INDEXABLE:
+            raise AssertionError(f"{path}: unexpected publication route")
+    if seen != INDEXABLE | LEGACY:
+        raise AssertionError("Missing or unexpected output routes")
+
+    search = json.loads((DOCS / "assets/js/search-index.json").read_text(encoding="utf-8"))
+    search_routes = {entry["url"] for entry in search}
+    expected_search = INDEXABLE - {"", "sobre-tarifa-pro/", "contacto/", "privacidad/", "terminos/", "cookies/"}
+    if search_routes != expected_search or len(search) != len(expected_search):
+        raise AssertionError("Search must expose the consolidated tools, categories and original guides only")
+    for category in CATEGORIES:
+        slug = category["slug"]
+        text = (DOCS / slug / "index.html").read_text(encoding="utf-8")
+        for expected_text in ("Preguntas que debes resolver antes de cotizar", "Plantilla de alcance", "Cuándo volver a presupuestar", CATEGORY_WORKFLOWS[slug]["guide"]):
+            if expected_text not in text:
+                raise AssertionError(f"{slug}: missing category-specific scope guidance")
         if "cuanto-cobrar-" in text:
-            raise AssertionError(f"{category}: still promotes templated rates")
-    # These three editorial articles must contain worked examples and be independent.
-    for slug in [
-        "calcular-tarifa-hora-freelance",
-        "presupuestar-pagina-web-alcance",
-        "cotizar-edicion-video-entregables",
-    ]:
-        file = DOCS / "guias" / slug / "index.html"
-        text = file.read_text(encoding="utf-8")
-        text_without_html = re.sub(r"<[^>]+>", " ", text)
-        if len(text_without_html.split()) < 420:
-            raise AssertionError(f"{file}: guide is too short to demonstrate its worked example")
-        if not ('"@type": "Article"' in text and 'dateModified' in text):
-            raise AssertionError(f"{file}: missing honest editorial metadata")
-        if text.count("<h1") != 1 or text.count("<h2") < 4:
-            raise AssertionError(f"{file}: missing article structure")
-        if f'<link rel="canonical" href="{BASE}guias/{slug}/">' not in text:
-            raise AssertionError(f"{file}: wrong canonical")
-    print("Worked guides and editorial disclosures checked.")
-    print(f"Validated {len(html_files)} pages; {indexable_count} indexable, {noindex_count} noindex; {len(actual)} sitemap URLs.")
+            raise AssertionError(f"{slug}: still promotes retired routes")
+    for guide in GUIDES:
+        path = DOCS / "guias" / guide["slug"] / "index.html"
+        text = path.read_text(encoding="utf-8")
+        if text.count("<h2") < 4 or "<table" not in text:
+            raise AssertionError(f"{path}: missing worked-example structure")
+        if len(re.sub(r"<[^>]+>", " ", guide["html"]).split()) < 420:
+            raise AssertionError(f"{path}: substantial guide content unexpectedly lost")
+        match = re.search(r'<script type="application/ld\+json">(.*?)</script>', text, re.S)
+        schema = json.loads(match.group(1)) if match else {}
+        if schema.get("@type") != "Article" or schema.get("mainEntityOfPage") != BASE + "guias/" + guide["slug"] + "/":
+            raise AssertionError(f"{path}: missing or incorrect editorial metadata")
+        if schema.get("author", {}).get("name") != "Tarifa Pro" or "datePublished" in schema:
+            raise AssertionError(f"{path}: unverified authorship or publication date")
+    contact = (DOCS / "contacto" / "index.html").read_text(encoding="utf-8")
+    if f'mailto:{SITE["contact_email"]}' not in contact or "no envía mensajes por sí sola" not in contact:
+        raise AssertionError("Contact must provide the existing email and describe its actual behavior")
+    for source in (ROOT / "data" / "professions.json", ROOT / "data" / "countries.json"):
+        if any(key in source.read_text() for key in ("base_usd_hour", "usd_rate", "tax_info")):
+            raise AssertionError(f"{source}: unsourced rate/fiscal model returned")
+    print(f"Validated {len(html_files)} pages: {len(INDEXABLE)} indexable, {len(LEGACY)} withdrawal notices, {len(GUIDES)} practical guides.")
+    print(f"Sitemap/search, ownership metadata and {references_checked} local references verified; third-party loaders paused.")
 
 
 if __name__ == "__main__":

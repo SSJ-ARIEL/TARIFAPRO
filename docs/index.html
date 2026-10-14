@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tarifa Pro | Calculadora de Tarifas y Precios Freelance 2026</title>
-  <meta name="description" content="Tarifa Pro es la plataforma líder de referencia para cotizar proyectos digitales, calcular tarifas por hora, presupuestar servicios y consultar salarios freelance por profesión y país.">
+  <title>Tarifa Pro | Calculadora de tarifas y presupuestos freelance</title>
+  <meta name="description" content="Herramientas gratuitas para estimar una tarifa freelance desde tus gastos y preparar presupuestos. Los ejemplos por oficio y país son ilustrativos y no sustituyen datos de mercado, asesoría financiera o fiscal.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#030712">
   <meta name="google-site-verification" content="fiIBsjUQK2ml2hf1bKK4YpKukaQ7cPRnddfQ1tTW11g">
@@ -12,26 +12,13 @@
   <link rel="canonical" href="https://ssj-ariel.github.io/TARIFAPRO/">
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/css/styles.css">
-  
-  <!-- Cookie Consent Banner (CookieYes CMP / IAB TCF v2.2) -->
-  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/63029c5cae366ef7f38f04401f9d9185/script.js"></script>
 
-  <!-- Google tag (gtag.js) GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RM2QTBG2B4"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-RM2QTBG2B4');
-  </script>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7507181626477156" crossorigin="anonymous"></script>
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Tarifa Pro">
-  <meta property="og:title" content="Tarifa Pro | Calculadora de Tarifas y Precios Freelance 2026">
-  <meta property="og:description" content="Tarifa Pro es la plataforma líder de referencia para cotizar proyectos digitales, calcular tarifas por hora, presupuestar servicios y consultar salarios freelance por profesión y país.">
+  <meta property="og:title" content="Tarifa Pro | Calculadora de tarifas y presupuestos freelance">
+  <meta property="og:description" content="Herramientas gratuitas para estimar una tarifa freelance desde tus gastos y preparar presupuestos. Los ejemplos por oficio y país son ilustrativos y no sustituyen datos de mercado, asesoría financiera o fiscal.">
   <meta property="og:url" content="https://ssj-ariel.github.io/TARIFAPRO/">
   <meta property="og:image" content="https://ssj-ariel.github.io/TARIFAPRO/assets/icons/favicon.svg">
 </head>
@@ -50,20 +37,22 @@
 <a href="./marketing-digital/" class="">Marketing</a>
 <a href="./video-animacion/" class="">Video &amp; Edición</a>
 <a href="./redaccion-copywriting/" class="">Redacción</a>
+<a href="./ia-automatizacion/" class="">IA &amp; No-Code</a>
+<a href="./consultoria-negocios/" class="">Consultoría</a>
     </nav>
   </div>
 </header>
-  
+
   <main>
     <section class="hero">
       <div class="container">
-        <span class="badge-pill">📊 Inteligencia de Mercado Freelance 2026</span>
+        <span class="badge-pill">📊 Herramientas de cotización orientativa</span>
         <h1>¿Cuánto Cobrar por tus <span>Servicios Digitales?</span></h1>
-        <p class="hero-lead">Calcula tu tarifa por hora justa, presupuesta proyectos paso a paso y consulta precios de referencia en más de 10 países.</p>
-        
+        <p class="hero-lead">Calcula una tarifa orientativa desde tus propios gastos, prepara presupuestos y explora ejemplos de proyectos. Los importes ilustrativos no constituyen estadísticas de mercado.</p>
+
         <div class="search-container">
           <span class="search-icon">🔍</span>
-          <input type="text" id="search-input" class="search-input" data-index-path="./assets/js/search-index.json" placeholder="Busca por profesión o país (ej: Desarrollador React en México, Editor en España...)">
+          <input type="text" id="search-input" class="search-input" data-index-path="./assets/js/search-index.json" placeholder="Busca una guía, categoría o calculadora...">
           <div id="search-results" class="search-results"></div>
         </div>
       </div>
@@ -73,36 +62,36 @@
     <section class="container">
       <div class="calc-card">
         <h2 style="font-size: 1.6rem; color: #fff; margin-bottom: 8px;">🧮 Calculadora Rápida de Tarifa Freelance</h2>
-        <p style="color: var(--text-muted); font-size: 0.95rem;">Ingresa tus metas financieras y descubre tu tarifa mínima recomendada por hora y jornada.</p>
-        
+        <p style="color: var(--text-muted); font-size: 0.95rem;">Introduce gastos y disponibilidad para estimar un objetivo interno por hora. Incluye los costos personales y del negocio que quieras cubrir.</p>
+
         <div class="calc-grid">
           <div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <div class="form-group">
-                <label class="form-label" for="c-expenses">Gastos Mensuales de Vida ($):</label>
-                <input type="number" id="c-expenses" class="form-input" value="1200">
+                <label class="form-label" for="c-expenses">Gastos mensuales personales y del negocio:</label>
+                <input type="number" id="c-expenses" class="form-input" value="1200" min="0" step="0.01">
               </div>
               <div class="form-group">
                 <label class="form-label" for="c-hours">Horas Facturables / Sem.:</label>
-                <input type="number" id="c-hours" class="form-input" value="25">
-              </div>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-              <div class="form-group">
-                <label class="form-label" for="c-vacations">Semanas de Vacaciones / Año:</label>
-                <input type="number" id="c-vacations" class="form-input" value="4">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="c-savings">Margen de Ahorro / Retiro (%):</label>
-                <input type="number" id="c-savings" class="form-input" value="20">
+                <input type="number" id="c-hours" class="form-input" value="25" min="0.01" max="168" step="0.25">
               </div>
             </div>
 
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
               <div class="form-group">
-                <label class="form-label" for="c-taxes">Impuestos Estimados (%):</label>
-                <input type="number" id="c-taxes" class="form-input" value="15">
+                <label class="form-label" for="c-vacations">Semanas de Vacaciones / Año:</label>
+                <input type="number" id="c-vacations" class="form-input" value="4" min="0" max="51.99" step="0.25">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-savings">Margen de Ahorro / Retiro (%):</label>
+                <input type="number" id="c-savings" class="form-input" value="20" min="0" max="300" step="0.1">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+              <div class="form-group">
+                <label class="form-label" for="c-taxes">Supuesto de impuestos (%):</label>
+                <input type="number" id="c-taxes" class="form-input" value="0" min="0" max="99.99" step="0.1">
               </div>
               <div class="form-group">
                 <label class="form-label" for="c-currency">Moneda:</label>
@@ -116,19 +105,20 @@
             </div>
           </div>
 
-          <div class="result-card">
+          <div class="result-card" aria-live="polite">
+            <noscript><p>Activa JavaScript para calcular con tus datos. La fórmula y un ejemplo están explicados en la guía de tarifa por hora.</p></noscript>
             <div class="result-stat">
-              <div class="result-label">Tarifa Mínima Recomendada</div>
-              <div class="result-val-big" id="res-hourly">$20 / h</div>
+              <div class="result-label">Objetivo orientativo por hora</div>
+              <div class="result-val-big" id="res-hourly">—</div>
             </div>
             <div class="result-breakdown">
               <div>
                 <div class="result-label">Por Jornada (Day Rate)</div>
-                <div class="breakdown-val" id="res-daily">$150</div>
+                <div class="breakdown-val" id="res-daily">—</div>
               </div>
               <div>
-                <div class="result-label">Retainer Mensual</div>
-                <div class="breakdown-val" id="res-retainer">$2,100 / mes</div>
+                <div class="result-label">Objetivo mensual medio</div>
+                <div class="breakdown-val" id="res-retainer">—</div>
               </div>
             </div>
           </div>
@@ -140,28 +130,42 @@
     <section class="container">
       <h2 class="section-title">Explora Guías y Tarifas por Categoría</h2>
       <div class="categories-grid">
-        <a href="./desarrollo-web/" class="card"><div><div class="card-icon">💻</div><h3>Desarrollo &amp; Programación</h3><p>Tarifas por hora, precios de aplicaciones, sitios web, APIs y proyectos de software a medida.</p></div></a>
-<a href="./diseno-multimedia/" class="card"><div><div class="card-icon">🎨</div><h3>Diseño UI/UX &amp; Gráfico</h3><p>Cotización de marcas, interfaces web, prototipos en Figma, ilustración digital y branding.</p></div></a>
-<a href="./marketing-digital/" class="card"><div><div class="card-icon">📈</div><h3>Marketing &amp; Publicidad Digital</h3><p>Precios de gestión de campañas de Meta/Google Ads, SEO, Community Management y lanzamientos.</p></div></a>
-<a href="./video-animacion/" class="card"><div><div class="card-icon">🎬</div><h3>Video &amp; Motion Graphics</h3><p>Costes de edición para YouTube/TikTok, efectos visuales, animación 3D y postproducción de audio.</p></div></a>
-<a href="./redaccion-copywriting/" class="card"><div><div class="card-icon">✍️</div><h3>Redacción &amp; Copywriting</h3><p>Tarifas por palabra, artículos para blog, páginas de venta, emails comerciales y traducción técnica.</p></div></a>
-<a href="./ia-automatizacion/" class="card"><div><div class="card-icon">🤖</div><h3>Inteligencia Artificial &amp; No-Code</h3><p>Cotización de chatbots con IA, automatizaciones en Make/Zapier y desarrollo con Bubble/Webflow.</p></div></a>
-<a href="./consultoria-negocios/" class="card"><div><div class="card-icon">💼</div><h3>Consultoría &amp; Estrategia</h3><p>Tarifas de asesoría empresarial, finanzas, analítica de datos y gestión de proyectos.</p></div></a>
+        <a href="./desarrollo-web/" class="card"><div><div class="card-icon">💻</div><h3>Desarrollo &amp; Programación</h3><p>Prepara el alcance de una web: páginas, integraciones, pruebas, revisiones y mantenimiento.</p></div></a>
+<a href="./diseno-multimedia/" class="card"><div><div class="card-icon">🎨</div><h3>Diseño UI/UX &amp; Gráfico</h3><p>Define piezas visuales, versiones, licencias, archivos editables y criterios de entrega.</p></div></a>
+<a href="./marketing-digital/" class="card"><div><div class="card-icon">📈</div><h3>Marketing &amp; Publicidad Digital</h3><p>Separa la gestión de campañas de la inversión publicitaria y acuerda métricas e informes.</p></div></a>
+<a href="./video-animacion/" class="card"><div><div class="card-icon">🎬</div><h3>Video &amp; Motion Graphics</h3><p>Desglosa material bruto, montaje, audio, subtítulos, formatos y rondas de revisión.</p></div></a>
+<a href="./redaccion-copywriting/" class="card"><div><div class="card-icon">✍️</div><h3>Redacción &amp; Copywriting</h3><p>Presupuesta investigación, entrevistas, redacción, fuentes, edición y correcciones.</p></div></a>
+<a href="./ia-automatizacion/" class="card"><div><div class="card-icon">🤖</div><h3>Inteligencia Artificial &amp; No-Code</h3><p>Cotiza diagnóstico, integración, pruebas de fallos, consumo de API y soporte de una automatización.</p></div></a>
+<a href="./consultoria-negocios/" class="card"><div><div class="card-icon">💼</div><h3>Consultoría &amp; Estrategia</h3><p>Acuerda una pregunta de negocio, evidencia, reuniones y entregables para un diagnóstico concreto.</p></div></a>
       </div>
 
-      <!-- EEAT Editorial Box -->
+      <section style="margin-top:40px;margin-bottom:48px;">
+      <h2 class="section-title">Guías con ejemplos que puedes comprobar</h2>
+      <p style="color:var(--text-muted);line-height:1.8;margin-bottom:22px;">No son listas de precios supuestamente extraídas del mercado. Cada guía describe sus supuestos, hace las cuentas y explica qué decisiones debe tomar el lector.</p>
+      <div class="categories-grid"><a href="./guias/calcular-tarifa-hora-freelance/" class="card"><h3>Cómo calcular tu tarifa freelance con horas facturables reales</h3><p>Calcula un punto de partida con un caso de números transparentes y comprueba qué cambia cuando tienes menos horas que vender.</p></a>
+<a href="./guias/presupuestar-pagina-web-alcance/" class="card"><h3>Presupuestar una página web: horas, revisiones y cambios de alcance</h3><p>Desglosa una web en fases y aprende a separar el trabajo contratado de los cambios adicionales.</p></a>
+<a href="./guias/cotizar-edicion-video-entregables/" class="card"><h3>Cómo cotizar una edición de video sin olvidar subtítulos ni revisiones</h3><p>Separa edición, audio, subtítulos, formatos y derechos para que el precio responda al trabajo real.</p></a>
+<a href="./guias/presupuestar-identidad-visual-alcance/" class="card"><h3>Presupuestar una identidad visual: decisiones, archivos y revisiones</h3><p>Distingue explorar una identidad de producir sus aplicaciones y convierte las aprobaciones en entregables comprobables.</p></a>
+<a href="./guias/cotizar-gestion-campanas-publicidad/" class="card"><h3>Cotizar campañas publicitarias separando gestión e inversión</h3><p>Explica qué paga el cliente por el trabajo y qué paga a la plataforma, con límites de inversión y tareas de seguimiento verificables.</p></a>
+<a href="./guias/presupuestar-redaccion-investigacion/" class="card"><h3>Presupuestar redacción con investigación y comprobación de fuentes</h3><p>Presupuesta las tareas que hacen verificable un texto y decide qué ocurre cuando aparecen fuentes o entrevistas adicionales.</p></a>
+<a href="./guias/cotizar-automatizacion-pruebas-soporte/" class="card"><h3>Cotizar una automatización incluyendo pruebas, consumo y soporte</h3><p>Define cuándo funciona una automatización, qué ocurre cuando falla y cuánto trabajo queda después de ponerla en marcha.</p></a>
+<a href="./guias/presupuestar-consultoria-diagnostico/" class="card"><h3>Presupuestar una consultoría de diagnóstico antes de implementar</h3><p>Cobra un diagnóstico por el trabajo y la evidencia que entrega, sin prometer ahorros que todavía no se han demostrado.</p></a>
+<a href="./guias/impuestos-presupuesto-fuentes-oficiales/" class="card"><h3>Impuestos en un presupuesto: separar conceptos y verificar fuentes oficiales</h3><p>Organiza las dudas fiscales de una propuesta y consulta la fuente oficial aplicable antes de completar importes o porcentajes.</p></a></div>
+    </section>
+
+    <!-- EEAT Editorial Box -->
       <article class="editorial-box">
         <h2>🛡️ Metodología y Criterios Financieros de Tarifa Pro</h2>
         <p>
-          En <strong>Tarifa Pro</strong> analizamos datos de mercado de plataformas internacionales de trabajo independiente, encuestas a profesionales remotos y tabuladores salariales promedio en Iberoamérica y Estados Unidos.
+          En <strong>Tarifa Pro</strong> ofrecemos simulaciones a partir de datos introducidos por cada persona. Las cifras precargadas son ejemplos de cálculo. Las antiguas fichas por país se han retirado porque sus importes no procedían de datos de mercado verificados.
         </p>
         <p>
-          Nuestras fórmulas consideran el factor de horas no facturables (administración, prospección de clientes y descanso) para que los trabajadores independientes no queden desprotegidos ante gastos operativos o imprevistos de salud.
+          Para fijar un precio real, calcula tus gastos, considera el tiempo no facturable y contrasta tus estimaciones con propuestas comparables. El selector de moneda cambia el símbolo, pero no realiza conversiones de divisas.
         </p>
         <div class="badges-row">
-          <span class="badge-item">✓ Fórmulas Validadas con Contadores</span>
-          <span class="badge-item">✓ Actualizado a Estándares Fiscales 2026</span>
-          <span class="badge-item">✓ Adaptado a Moneda Local y USD Remoto</span>
+          <span class="badge-item">✓ Cálculos editables y orientativos</span>
+          <span class="badge-item">✓ Información fiscal a verificar localmente</span>
+          <span class="badge-item">✓ Símbolos de moneda sin conversión</span>
           <span class="badge-item">✓ Sin Registro Requerido</span>
         </div>
       </article>
@@ -177,7 +181,7 @@
           <span>Tarifa <span class="brand-gradient">Pro</span></span>
         </a>
         <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 360px;">
-          Plataforma de referencia financiera y de cotización para freelancers, agencias y creadores digitales en español.
+          Métodos de cálculo y herramientas para preparar presupuestos freelance con alcance y supuestos claros.
         </p>
       </div>
       <div class="footer-col">
@@ -185,9 +189,9 @@
         <ul class="footer-links">
           <li><a href="./calculadora-freelance/">Calculadora de Tarifa por Hora</a></li>
           <li><a href="./generador-presupuestos/">Generador de Presupuestos PDF</a></li>
-          <li><a href="./desarrollo-web/">Tarifas de Programación</a></li>
-          <li><a href="./diseno-multimedia/">Tarifas de Diseño UI/UX</a></li>
-          <li><a href="./marketing-digital/">Tarifas de Marketing Digital</a></li>
+          <li><a href="./desarrollo-web/">Presupuestos de desarrollo</a></li>
+          <li><a href="./diseno-multimedia/">Alcance de diseño visual</a></li>
+          <li><a href="./marketing-digital/">Gestión de campañas</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -196,7 +200,7 @@
           <li><a href="./privacidad/">Política de Privacidad</a></li>
           <li><a href="./terminos/">Términos de Servicio</a></li>
           <li><a href="./cookies/">Política de Cookies</a></li>
-          <li><a href="./sobre-tarifa-pro/">Sobre el Proyecto (EEAT)</a></li>
+          <li><a href="./sobre-tarifa-pro/">Sobre el proyecto y método</a></li>
           <li><a href="./contacto/">Contacto</a></li>
         </ul>
       </div>

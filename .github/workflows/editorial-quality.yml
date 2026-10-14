@@ -25,9 +25,12 @@ jobs:
           node-version: '20'
       - name: Compilar y comprobar el JavaScript
         run: |
-          python -m py_compile scripts/build.py
+          python -m py_compile scripts/*.py
           node --check assets/js/calculator.js
           node --check assets/js/invoice.js
+          node --check assets/js/search.js
+      - name: Comprobar los cálculos publicados y sus límites
+        run: node scripts/test_tools.js
       - name: Generar las páginas
         run: python scripts/build.py
       - name: Revisar lo indexable
